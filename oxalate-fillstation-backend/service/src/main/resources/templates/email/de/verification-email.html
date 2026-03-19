@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<body>
+<p>Hallo <span th:text="${name}">Nutzer</span>,</p>
+<p>Bitte bestätigen Sie Ihre E-Mail-Adresse über den folgenden Link:</p>
+<p><a th:href="${verificationLink}" th:text="${verificationLink}">E-Mail bestätigen</a></p>
+<p>Dieser Link ist 24 Stunden gültig.</p>
+</body>
+</html>

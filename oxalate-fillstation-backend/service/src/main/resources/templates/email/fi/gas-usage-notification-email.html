@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fi">
+<body>
+<p>Hei <span th:text="${name}">Käyttäjä</span>,</p>
+<p>Kaasunkulutusyhteenvetosi:</p>
+<ul>
+  <li>O2 yhteensä: <span th:text="${summary.totalO2Added}">0</span> L</li>
+  <li>He yhteensä: <span th:text="${summary.totalHeAdded}">0</span> L</li>
+  <li>Kaasua yhteensä: <span th:text="${summary.totalGasAdded}">0</span> L</li>
+</ul>
+</body>
+</html>
