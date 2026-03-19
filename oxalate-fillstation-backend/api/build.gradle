@@ -1,0 +1,63 @@
+plugins {
+    id 'java-library'
+    id "io.freefair.lombok" version "${ioFreeFairLombok}"
+    id 'maven-publish'
+    id "jacoco"
+}
+
+group = 'io.oxalate.fillstation'
+version = project
+        .hasProperty("releaseVersion") ? project
+        .releaseVersion : '0.0.1-SNAPSHOT'
+
+jar {
+    archiveFileName = "${rootProject.name}-api-${version}.jar"
+}
+
+java {
+    // Attach sources and javadoc for Maven consumers
+    withSourcesJar()
+    withJavadocJar()
+}
+
+// Quiet javadoc warnings as we're using Lombok which does not generate documentation for the generated methods
+tasks
+        .withType(Javadoc)
+        .configureEach {
+            options
+                    .addStringOption('Xdoclint:all,-missing', '-quiet') // keep other checks, ignore missing docs
+        }
+
+
+dependencies {
+    api "org.springframework.boot:spring-boot-jackson:${springBootVersion}"
+    api "org.springframework.boot:spring-boot-starter-webmvc:${springBootVersion}"
+    api "org.springframework.data:spring-data-jpa:${springBootVersion}"
+    implementation "io.swagger.core.v3:swagger-annotations:${swaggerVersion}"
+    // https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api
+    implementation "jakarta.validation:jakarta.validation-api:3.1.1"
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    testImplementation "org.junit.platform:junit-platform-launcher:${junitVersion}"
+}
+
+jacoco {
+    toolVersion = "0.8.13"
+}
+
+tasks
+        .named('test') {
+            useJUnitPlatform()
+        }
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml
+                .required = true
+    }
+}

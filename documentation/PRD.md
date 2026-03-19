@@ -140,6 +140,22 @@ The frontend UI should use react-i18next to handle all translations pertaining t
 languages in all the other communication such as emails with the user. The backend can use spring-boot-starter-thymeleaf for email templates in different
 languages.
 
+## Documentation
+
+The codebase should be well-documented with clear and concise comments explaining the purpose and functionality of each component, function, and class. In
+addition, the functions/methods should be documented using JSDoc for the frontend and JavaDoc for the backend to provide clear documentation for other
+developers
+who may work on the project in the future. The documentation should be kept up-to-date as the codebase evolves to ensure that it remains accurate and useful.
+
+Finally there should be separate user and administration documentation located in the main documentation folder. The user documentation should provide clear
+instructions on how to use the application, including how to register, log in, manage cylinders and gas fills, and any other relevant features. The
+administration documentation should provide clear instructions on how to manage the application, including how to approve or reject user registrations, manage
+user accounts, and any other relevant administrative features. Both sets of documentation should be written in a clear and concise manner, with step-by-step
+instructions and screenshots where appropriate to help users and administrators understand how to use the application effectively. The documentation is done in
+Markdown format and should be stored in the main documentation folder of the project. This documentation should as well be kept up-to-date as the application
+evolves to ensure that it remains accurate and useful for users and administrators. This task should always be a part of the overall task performed by the
+AI agents.
+
 ## Testing
 
 The frontend code should be covered by unit test using Jest and React Testing Library. In addition, ESLint should be used to ensure code quality and
@@ -153,3 +169,8 @@ the backend and the database, as well as end-to-end tests to test the entire app
 be used for integration testing to ensure that the tests are run in an environment that closely resembles the production environment. This will help to identify
 any issues that may arise due to differences in the environment, such as database configuration or network settings. The tests should be run automatically as
 part of the CI/CD pipeline to ensure that any issues are identified and addressed quickly.
+
+The tests should be always be included in any AI agent task that involves modifying the codebase to ensure that the changes do not introduce any new issues or
+regressions. The tests should be comprehensive and cover all critical functionality of the backend, including authentication and authorization, user management,
+and data management. The tests should also cover edge cases and error handling to ensure that the backend is robust and can handle unexpected situations
+gracefully. By including tests in every task, we can ensure that the codebase remains stable and reliable as it evolves over time.

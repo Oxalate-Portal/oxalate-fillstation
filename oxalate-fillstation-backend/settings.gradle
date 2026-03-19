@@ -1,0 +1,3 @@
+rootProject
+        .name = 'oxalate-fillstation'
+include 'api', 'service'
