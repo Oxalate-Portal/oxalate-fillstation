@@ -1,4 +1,4 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

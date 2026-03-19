@@ -1,4 +1,4 @@
-package io.oxalate.fillstation.oxalate_fillstation;
+package io.oxalate.fillstation;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

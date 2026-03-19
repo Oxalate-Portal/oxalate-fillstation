@@ -1,6 +1,6 @@
-package io.oxalate.fillstation.oxalate_fillstation;
+package io.oxalate.fillstation;
 
-import io.oxalate.fillstation.oxalate_fillstation.service.InitialAdminService;
+import io.oxalate.fillstation.service.InitialAdminService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

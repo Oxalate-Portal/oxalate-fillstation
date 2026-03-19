@@ -1,7 +1,7 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.Cylinder;
-import io.oxalate.fillstation.oxalate_fillstation.repository.CylinderRepository;
+import io.oxalate.fillstation.entity.Cylinder;
+import io.oxalate.fillstation.repository.CylinderRepository;
 import io.oxalate.fillstation.api.request.CylinderRequest;
 import io.oxalate.fillstation.api.response.CylinderResponse;
 import java.util.List;

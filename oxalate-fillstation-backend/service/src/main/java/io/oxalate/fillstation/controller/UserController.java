@@ -1,8 +1,8 @@
-package io.oxalate.fillstation.oxalate_fillstation.controller;
+package io.oxalate.fillstation.controller;
 
-import io.oxalate.fillstation.oxalate_fillstation.service.FillEntryService;
-import io.oxalate.fillstation.oxalate_fillstation.service.LoginHistoryService;
-import io.oxalate.fillstation.oxalate_fillstation.service.UserService;
+import io.oxalate.fillstation.service.FillEntryService;
+import io.oxalate.fillstation.service.LoginHistoryService;
+import io.oxalate.fillstation.service.UserService;
 import io.oxalate.fillstation.api.request.UserUpdateRequest;
 import io.oxalate.fillstation.api.response.GasUsageSummary;
 import io.oxalate.fillstation.api.response.LoginHistoryResponse;

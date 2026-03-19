@@ -1,4 +1,4 @@
-package io.oxalate.fillstation.oxalate_fillstation;
+package io.oxalate.fillstation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

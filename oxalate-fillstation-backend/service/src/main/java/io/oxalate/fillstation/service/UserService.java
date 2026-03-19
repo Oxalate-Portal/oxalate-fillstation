@@ -1,10 +1,10 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.LockedEmail;
-import io.oxalate.fillstation.oxalate_fillstation.entity.User;
-import io.oxalate.fillstation.oxalate_fillstation.entity.UserStatus;
-import io.oxalate.fillstation.oxalate_fillstation.repository.LockedEmailRepository;
-import io.oxalate.fillstation.oxalate_fillstation.repository.UserRepository;
+import io.oxalate.fillstation.entity.LockedEmail;
+import io.oxalate.fillstation.entity.User;
+import io.oxalate.fillstation.entity.UserStatus;
+import io.oxalate.fillstation.repository.LockedEmailRepository;
+import io.oxalate.fillstation.repository.UserRepository;
 import io.oxalate.fillstation.api.request.UserUpdateRequest;
 import io.oxalate.fillstation.api.response.UserResponse;
 import java.time.LocalDateTime;

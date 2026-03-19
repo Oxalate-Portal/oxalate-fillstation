@@ -1,7 +1,7 @@
-package io.oxalate.fillstation.oxalate_fillstation.repository;
+package io.oxalate.fillstation.repository;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.EmailToken;
-import io.oxalate.fillstation.oxalate_fillstation.entity.TokenType;
+import io.oxalate.fillstation.entity.EmailToken;
+import io.oxalate.fillstation.entity.TokenType;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,7 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.Configuration;
-import io.oxalate.fillstation.oxalate_fillstation.repository.ConfigurationRepository;
+import io.oxalate.fillstation.entity.Configuration;
+import io.oxalate.fillstation.repository.ConfigurationRepository;
 import io.oxalate.fillstation.api.request.ConfigurationRequest;
 import io.oxalate.fillstation.api.response.ConfigurationResponse;
 import java.util.List;

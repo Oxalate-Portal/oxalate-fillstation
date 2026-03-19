@@ -1,4 +1,4 @@
-package io.oxalate.fillstation.oxalate_fillstation.entity;
+package io.oxalate.fillstation.entity;
 
 public enum RoleType {
     ROLE_ADMIN,

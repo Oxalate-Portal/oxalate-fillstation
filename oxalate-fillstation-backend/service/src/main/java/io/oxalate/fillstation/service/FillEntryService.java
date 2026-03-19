@@ -1,10 +1,10 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.Cylinder;
-import io.oxalate.fillstation.oxalate_fillstation.entity.FillEntry;
-import io.oxalate.fillstation.oxalate_fillstation.entity.FillStatus;
-import io.oxalate.fillstation.oxalate_fillstation.repository.CylinderRepository;
-import io.oxalate.fillstation.oxalate_fillstation.repository.FillEntryRepository;
+import io.oxalate.fillstation.entity.Cylinder;
+import io.oxalate.fillstation.entity.FillEntry;
+import io.oxalate.fillstation.entity.FillStatus;
+import io.oxalate.fillstation.repository.CylinderRepository;
+import io.oxalate.fillstation.repository.FillEntryRepository;
 import io.oxalate.fillstation.api.request.FillEntryRequest;
 import io.oxalate.fillstation.api.response.FillEntryResponse;
 import io.oxalate.fillstation.api.response.GasUsageSummary;

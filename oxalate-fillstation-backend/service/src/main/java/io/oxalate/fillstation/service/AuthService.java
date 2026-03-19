@@ -1,15 +1,15 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.EmailToken;
-import io.oxalate.fillstation.oxalate_fillstation.entity.RoleType;
-import io.oxalate.fillstation.oxalate_fillstation.entity.TokenType;
-import io.oxalate.fillstation.oxalate_fillstation.entity.User;
-import io.oxalate.fillstation.oxalate_fillstation.entity.UserStatus;
-import io.oxalate.fillstation.oxalate_fillstation.repository.EmailTokenRepository;
-import io.oxalate.fillstation.oxalate_fillstation.repository.LockedEmailRepository;
-import io.oxalate.fillstation.oxalate_fillstation.repository.RoleRepository;
-import io.oxalate.fillstation.oxalate_fillstation.repository.UserRepository;
-import io.oxalate.fillstation.oxalate_fillstation.security.JwtTokenProvider;
+import io.oxalate.fillstation.entity.EmailToken;
+import io.oxalate.fillstation.entity.RoleType;
+import io.oxalate.fillstation.entity.TokenType;
+import io.oxalate.fillstation.entity.User;
+import io.oxalate.fillstation.entity.UserStatus;
+import io.oxalate.fillstation.repository.EmailTokenRepository;
+import io.oxalate.fillstation.repository.LockedEmailRepository;
+import io.oxalate.fillstation.repository.RoleRepository;
+import io.oxalate.fillstation.repository.UserRepository;
+import io.oxalate.fillstation.security.JwtTokenProvider;
 import io.oxalate.fillstation.api.request.LoginRequest;
 import io.oxalate.fillstation.api.request.PasswordChangeRequest;
 import io.oxalate.fillstation.api.request.PasswordResetRequest;

@@ -1,4 +1,4 @@
-package io.oxalate.fillstation.oxalate_fillstation.entity;
+package io.oxalate.fillstation.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

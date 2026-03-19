@@ -1,4 +1,4 @@
-package io.oxalate.fillstation.oxalate_fillstation.security;
+package io.oxalate.fillstation.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

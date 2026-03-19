@@ -1,4 +1,4 @@
-package io.oxalate.fillstation.oxalate_fillstation.security;
+package io.oxalate.fillstation.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

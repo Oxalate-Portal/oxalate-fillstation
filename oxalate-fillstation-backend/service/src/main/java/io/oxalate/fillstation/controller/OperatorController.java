@@ -1,9 +1,9 @@
-package io.oxalate.fillstation.oxalate_fillstation.controller;
+package io.oxalate.fillstation.controller;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.FillStatus;
-import io.oxalate.fillstation.oxalate_fillstation.service.EmailService;
-import io.oxalate.fillstation.oxalate_fillstation.service.FillEntryService;
-import io.oxalate.fillstation.oxalate_fillstation.service.UserService;
+import io.oxalate.fillstation.entity.FillStatus;
+import io.oxalate.fillstation.service.EmailService;
+import io.oxalate.fillstation.service.FillEntryService;
+import io.oxalate.fillstation.service.UserService;
 import io.oxalate.fillstation.api.response.FillEntryResponse;
 import io.oxalate.fillstation.api.response.MessageResponse;
 import io.oxalate.fillstation.api.response.UserResponse;

@@ -1,4 +1,4 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,8 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import io.oxalate.fillstation.oxalate_fillstation.repository.CylinderRepository;
-import io.oxalate.fillstation.oxalate_fillstation.repository.FillEntryRepository;
+import io.oxalate.fillstation.repository.CylinderRepository;
+import io.oxalate.fillstation.repository.FillEntryRepository;
 
 import java.math.BigDecimal;
 

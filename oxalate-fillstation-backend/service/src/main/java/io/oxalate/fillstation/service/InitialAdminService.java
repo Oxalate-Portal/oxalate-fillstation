@@ -1,11 +1,11 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.Role;
-import io.oxalate.fillstation.oxalate_fillstation.entity.RoleType;
-import io.oxalate.fillstation.oxalate_fillstation.entity.User;
-import io.oxalate.fillstation.oxalate_fillstation.entity.UserStatus;
-import io.oxalate.fillstation.oxalate_fillstation.repository.RoleRepository;
-import io.oxalate.fillstation.oxalate_fillstation.repository.UserRepository;
+import io.oxalate.fillstation.entity.Role;
+import io.oxalate.fillstation.entity.RoleType;
+import io.oxalate.fillstation.entity.User;
+import io.oxalate.fillstation.entity.UserStatus;
+import io.oxalate.fillstation.repository.RoleRepository;
+import io.oxalate.fillstation.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;

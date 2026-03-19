@@ -1,6 +1,6 @@
-package io.oxalate.fillstation.oxalate_fillstation.repository;
+package io.oxalate.fillstation.repository;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.LockedEmail;
+import io.oxalate.fillstation.entity.LockedEmail;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

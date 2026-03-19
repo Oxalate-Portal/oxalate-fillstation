@@ -1,7 +1,7 @@
-package io.oxalate.fillstation.oxalate_fillstation.repository;
+package io.oxalate.fillstation.repository;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.FillEntry;
-import io.oxalate.fillstation.oxalate_fillstation.entity.FillStatus;
+import io.oxalate.fillstation.entity.FillEntry;
+import io.oxalate.fillstation.entity.FillStatus;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;

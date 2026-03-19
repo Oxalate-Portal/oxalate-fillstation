@@ -1,7 +1,7 @@
-package io.oxalate.fillstation.oxalate_fillstation.service;
+package io.oxalate.fillstation.service;
 
-import io.oxalate.fillstation.oxalate_fillstation.entity.LoginHistory;
-import io.oxalate.fillstation.oxalate_fillstation.repository.LoginHistoryRepository;
+import io.oxalate.fillstation.entity.LoginHistory;
+import io.oxalate.fillstation.repository.LoginHistoryRepository;
 import io.oxalate.fillstation.api.response.LoginHistoryResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

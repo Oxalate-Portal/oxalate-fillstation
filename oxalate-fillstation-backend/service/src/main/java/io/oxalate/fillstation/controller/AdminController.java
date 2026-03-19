@@ -1,6 +1,6 @@
-package io.oxalate.fillstation.oxalate_fillstation.controller;
+package io.oxalate.fillstation.controller;
 
-import io.oxalate.fillstation.oxalate_fillstation.service.ConfigurationService;
+import io.oxalate.fillstation.service.ConfigurationService;
 import io.oxalate.fillstation.api.request.ConfigurationRequest;
 import io.oxalate.fillstation.api.response.ConfigurationResponse;
 import io.oxalate.fillstation.api.response.MessageResponse;

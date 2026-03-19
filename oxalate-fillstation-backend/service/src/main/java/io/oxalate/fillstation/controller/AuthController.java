@@ -1,6 +1,6 @@
-package io.oxalate.fillstation.oxalate_fillstation.controller;
+package io.oxalate.fillstation.controller;
 
-import io.oxalate.fillstation.oxalate_fillstation.service.AuthService;
+import io.oxalate.fillstation.service.AuthService;
 import io.oxalate.fillstation.api.request.LoginRequest;
 import io.oxalate.fillstation.api.request.PasswordChangeRequest;
 import io.oxalate.fillstation.api.request.PasswordResetRequest;
