@@ -24,6 +24,9 @@ public class JwtTokenProvider {
     @Value("${app.jwt.ttl-minutes}")
     private long ttlMinutes;
 
+    @Value("${server.ssl.enabled:false}")
+    private boolean sslEnabled;
+
     private SecretKey getSigningKey() {
         byte[] keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
@@ -62,7 +65,7 @@ public class JwtTokenProvider {
     public void addJwtCookie(HttpServletResponse response, String token) {
         Cookie cookie = new Cookie(COOKIE_NAME, token);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false); // set true in production behind HTTPS
+        cookie.setSecure(sslEnabled);
         cookie.setPath("/");
         cookie.setMaxAge((int) (ttlMinutes * 60));
         response.addCookie(cookie);

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -57,12 +58,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}/gas-usage")
-    public ResponseEntity<GasUsageSummary> getGasUsage(@PathVariable Long id,
-                                                        @AuthenticationPrincipal UserDetails userDetails) {
-        UserResponse me = userService.getUserByEmail(userDetails.getUsername());
-        if (!me.getId().equals(id) && me.getRoles().stream().noneMatch(r -> r.contains("ADMIN") || r.contains("OPERATOR"))) {
-            return ResponseEntity.status(403).build();
-        }
+    @PreAuthorize("authentication.name == @userService.getUser(#id).email or hasAnyRole('ADMIN', 'OPERATOR')")
+    public ResponseEntity<GasUsageSummary> getGasUsage(@PathVariable Long id) {
         return ResponseEntity.ok(fillEntryService.getGasUsage(id));
     }
 }
