@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="sv">
+<body>
+<p>Hej <span th:text="${name}">Användare</span>,</p>
+<p>Verifiera din e-postadress genom att klicka på länken nedan:</p>
+<p><a th:href="${verificationLink}" th:text="${verificationLink}">Verifiera e-post</a></p>
+<p>Länken är giltig i 24 timmar.</p>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fi">
+<body>
+<p>Hei <span th:text="${name}">Käyttäjä</span>,</p>
+<p>Vahvista sähköpostiosoitteesi klikkaamalla alla olevaa linkkiä:</p>
+<p><a th:href="${verificationLink}" th:text="${verificationLink}">Vahvista sähköposti</a></p>
+<p>Linkki on voimassa 24 tuntia.</p>
+</body>
+</html>

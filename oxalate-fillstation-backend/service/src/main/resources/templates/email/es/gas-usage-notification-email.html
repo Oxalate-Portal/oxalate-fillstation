@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<body>
+<p>Hola <span th:text="${name}">Usuario</span>,</p>
+<p>Aquí está su resumen de uso de gas:</p>
+<ul>
+  <li>O2 total: <span th:text="${summary.totalO2Added}">0</span> L</li>
+  <li>He total: <span th:text="${summary.totalHeAdded}">0</span> L</li>
+  <li>Gas total: <span th:text="${summary.totalGasAdded}">0</span> L</li>
+</ul>
+</body>
+</html>

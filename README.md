@@ -6,3 +6,10 @@ with a PostgreSQL database to store the data.
 
 To simplify the installation, the project uses Docker Compose to run the frontend, backend, and database in separate
 containers. This allows for easy setup and deployment.
+
+## API Documentation (Swagger UI)
+
+When the backend is running locally with the default configuration, Swagger UI is available at:
+
+- http://localhost:8080/swagger-ui/index.html
+

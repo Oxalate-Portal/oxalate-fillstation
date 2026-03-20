@@ -133,6 +133,39 @@ Accounts with admin role have the following additional functionality:
   for retrieving the configuration settings, which can be used by the frontend to dynamically adjust its behavior based on the current configuration. This
   allows for a more flexible and adaptable application that can easily accommodate changes in requirements or user needs.
 
+### Other
+
+#### Backend API
+
+The backend should provide a RESTful API that allows the frontend to interact with the database and perform all necessary operations. The API should be
+well-designed and follow best practices for RESTful API design, including proper use of HTTP methods, status codes,
+
+There shall be a separate api module in the backend project which contains all the necessary code for any other service to connect to the service. This
+means that the module contains the interface definitions which the controllers then implement, as well as data transfer objects (DTOs) and any enums used in
+them. All possible annotation should be on the interface leaving the controllers as clutter free as possible.
+
+In addition, the interfaces as well as the DTOs should be annotated with the necessary annotations to generate OpenAPI documentation for the API in addition to
+also have the necessary annotations from jakarta.validation.
+
+This separation of concerns helps to keep the codebase organized and maintainable, making it easier for developers to understand and
+work with the API code. The API should be well-documented, with clear and concise documentation for each endpoint, including the expected input and output, as
+well as any relevant error codes or messages. This documentation should be easily accessible to developers who are working with the API, and should be kept
+up-to-date as the API evolves over time. The API should also include proper error handling and validation to ensure that it is robust and can handle unexpected
+situations gracefully. This includes returning appropriate error codes and messages when invalid input is received, as well as handling any exceptions that may
+
+#### Frontend types
+
+The frontend code should always have the necessary types defined for all data structures used in the codebase. This includes defining types for API responses,
+component props, and any other data structures used in the frontend. This helps to ensure that the code is type-safe and can catch potential issues at compile
+time, rather than at runtime. The types should be defined in a clear and organized manner, making it easy for developers to understand and work with the
+codebase. The types should also be kept up-to-date as the codebase evolves to ensure that they remain accurate and useful for developers working on the
+frontend. This is especially important in a TypeScript codebase, where the use of types is a key feature that helps to improve code quality and maintainability.
+By ensuring that all data structures have the necessary types defined, we can help to prevent bugs and improve the overall quality of the frontend codebase,
+making it easier for developers to work with and maintain over time. This means that nowhere in the frontend code should there be any use of the `any` type, and
+all data structures should have clear and accurate types defined. This includes defining types for API responses, component props, and any other data structures
+used in the frontend. By following this practice, we can help to ensure that the frontend codebase is robust, maintainable, and easy to work with for developers
+of all skill levels.
+
 ## Translations
 
 Both the frontend and the backend should support multiple languages. Specifically the following languages should be supported: de, en, es, fi and sv.
@@ -169,6 +202,15 @@ the backend and the database, as well as end-to-end tests to test the entire app
 be used for integration testing to ensure that the tests are run in an environment that closely resembles the production environment. This will help to identify
 any issues that may arise due to differences in the environment, such as database configuration or network settings. The tests should be run automatically as
 part of the CI/CD pipeline to ensure that any issues are identified and addressed quickly.
+
+Note! The different types of tests (unit, integration, end-to-end or contract) should have separate filename suffix. Unit test file names ends with UTC,
+integration test file names end with ITC and contract test file names end with CTC. This allows for easy identification of the type of test being run and helps
+to ensure that the appropriate tests are run at the appropriate times during the development process.
+
+The test case naming should be this pattern: <name of method being tested>_<scenario being tested>_<Ok|Fail>. In case of CTSs, the method name is that of
+the interface method responding to the particular REST API endpoint. This naming convention helps to clearly communicate the purpose of each test case and makes
+it easier for developers to understand what is being tested and what the expected outcome is. By following this naming convention, we can improve the
+readability and maintainability of our test cases, making it easier for developers to work with the tests and identify any issues that may arise during testing.
 
 The tests should be always be included in any AI agent task that involves modifying the codebase to ensure that the changes do not introduce any new issues or
 regressions. The tests should be comprehensive and cover all critical functionality of the backend, including authentication and authorization, user management,
