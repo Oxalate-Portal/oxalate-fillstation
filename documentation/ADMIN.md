@@ -10,20 +10,20 @@
 
 The following environment variables must be set before starting the backend container:
 
-| Variable | Required | Description |
-|---|---|---|
-| `SPRING_DATASOURCE_URL` | Yes | JDBC URL for the PostgreSQL database |
-| `SPRING_DATASOURCE_USERNAME` | Yes | Database username |
-| `SPRING_DATASOURCE_PASSWORD` | Yes | Database password |
-| `JWT_SECRET` | Yes | Secret key used to sign JWT tokens (min. 32 chars) |
-| `JWT_TTL_MINUTES` | No | JWT token lifetime in minutes (default: 60) |
-| `SPRING_MAIL_HOST` | Yes | SMTP server hostname |
-| `SPRING_MAIL_PORT` | No | SMTP port (default: 587) |
-| `SPRING_MAIL_USERNAME` | Yes | SMTP authentication username |
-| `SPRING_MAIL_PASSWORD` | Yes | SMTP authentication password |
-| `APP_BASE_URL` | Yes | Public base URL of the application (e.g. `https://fillstation.example.com`) |
-| `INITIAL_ADMIN_EMAIL` | No | Email address for the initial admin account |
-| `INITIAL_ADMIN_PASSWORD` | No | Password for the initial admin account |
+| Variable                     | Required | Description                                                                 |
+|------------------------------|----------|-----------------------------------------------------------------------------|
+| `SPRING_DATASOURCE_URL`      | Yes      | JDBC URL for the PostgreSQL database                                        |
+| `SPRING_DATASOURCE_USERNAME` | Yes      | Database username                                                           |
+| `SPRING_DATASOURCE_PASSWORD` | Yes      | Database password                                                           |
+| `JWT_SECRET`                 | Yes      | Secret key used to sign JWT tokens (min. 32 chars)                          |
+| `JWT_TTL_MINUTES`            | No       | JWT token lifetime in minutes (default: 60)                                 |
+| `SPRING_MAIL_HOST`           | Yes      | SMTP server hostname                                                        |
+| `SPRING_MAIL_PORT`           | No       | SMTP port (default: 587)                                                    |
+| `SPRING_MAIL_USERNAME`       | Yes      | SMTP authentication username                                                |
+| `SPRING_MAIL_PASSWORD`       | Yes      | SMTP authentication password                                                |
+| `APP_BASE_URL`               | Yes      | Public base URL of the application (e.g. `https://fillstation.example.com`) |
+| `INITIAL_ADMIN_EMAIL`        | No       | Email address for the initial admin account                                 |
+| `INITIAL_ADMIN_PASSWORD`     | No       | Password for the initial admin account                                      |
 
 > If `INITIAL_ADMIN_EMAIL` and `INITIAL_ADMIN_PASSWORD` are set, the backend will create or update the admin account on startup. Use this to recover a forgotten admin password.
 
@@ -54,14 +54,14 @@ The **Pending Registrations** tab lists all accounts awaiting approval.
 
 The **Users** tab displays all registered accounts in a table with the following columns:
 
-| Column | Description |
-|---|---|
-| ID | Internal user identifier |
-| Name | Full name |
-| Email | Email address |
-| Status | PENDING / ACTIVE / LOCKED |
-| Roles | ROLE_USER / ROLE_OPERATOR / ROLE_ADMIN |
-| Registered | Account creation date |
+| Column     | Description                            |
+|------------|----------------------------------------|
+| ID         | Internal user identifier               |
+| Name       | Full name                              |
+| Email      | Email address                          |
+| Status     | PENDING / ACTIVE / LOCKED              |
+| Roles      | ROLE_USER / ROLE_OPERATOR / ROLE_ADMIN |
+| Registered | Account creation date                  |
 
 **Available actions per user:**
 
@@ -95,16 +95,16 @@ Use the **Edit** or **Delete** icons in the configuration table row.
 
 ### 4. Roles and Permissions
 
-| Feature | User | Operator | Admin |
-|---|---|---|---|
-| Manage own cylinders | ✔ | ✔ | ✔ |
-| Manage own fills | ✔ | ✔ | ✔ |
-| View own gas usage | ✔ | ✔ | ✔ |
-| View all users | | ✔ | ✔ |
-| Approve / reject registrations | | ✔ | ✔ |
-| Zero user fills | | ✔ | ✔ |
-| Send notification emails | | ✔ | ✔ |
-| Manage application configuration | | | ✔ |
+| Feature                          | User | Operator | Admin |
+|----------------------------------|------|----------|-------|
+| Manage own cylinders             | ✔    | ✔        | ✔     |
+| Manage own fills                 | ✔    | ✔        | ✔     |
+| View own gas usage               | ✔    | ✔        | ✔     |
+| View all users                   |      | ✔        | ✔     |
+| Approve / reject registrations   |      | ✔        | ✔     |
+| Zero user fills                  |      | ✔        | ✔     |
+| Send notification emails         |      | ✔        | ✔     |
+| Manage application configuration |      |          | ✔     |
 
 A single user account may hold multiple roles simultaneously.
 

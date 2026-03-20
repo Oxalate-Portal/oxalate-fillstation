@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "maven"
+    directory: "oxalate-fillstation-backend/"
+    registries: "*"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 15
+    groups:
+      dependencies:
+        update-types:
+          - minor
+          - patch
+          - major
+  - package-ecosystem: "npm"
+    directory: "oxalate-fillstation-frontend/"
+    registries: "*"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 15
+    groups:
+      dependencies:
+        update-types:
+          - minor
+          - patch
+          - major

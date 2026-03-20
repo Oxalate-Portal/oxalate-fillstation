@@ -32,11 +32,11 @@
 
 The Dashboard shows an overview of your gas usage:
 
-| Section | Description |
-|---|---|
-| **Total usage** | Cumulative O₂, He, and total gas (in litres) across all your fills |
-| **Since last zero** | Usage since an operator last reset your counters |
-| **Login history** | A table of your recent login events with timestamps and IP addresses |
+| Section             | Description                                                          |
+|---------------------|----------------------------------------------------------------------|
+| **Total usage**     | Cumulative O₂, He, and total gas (in litres) across all your fills   |
+| **Since last zero** | Usage since an operator last reset your counters                     |
+| **Login history**   | A table of your recent login events with timestamps and IP addresses |
 
 You can also **anonymise your account** from the Dashboard. This replaces your personal information (name, email) with anonymous identifiers in compliance with GDPR. The action is irreversible.
 
@@ -80,11 +80,11 @@ Navigate to **Fills** in the sidebar.
 
 #### 4.2 Fill Statuses
 
-| Status | Meaning |
-|---|---|
+| Status     | Meaning                                               |
+|------------|-------------------------------------------------------|
 | **Active** | Recently created; editable and deletable for 24 hours |
-| **Locked** | Older than 24 hours; cannot be edited or deleted |
-| **Zeroed** | Marked by an operator as accounted for |
+| **Locked** | Older than 24 hours; cannot be edited or deleted      |
+| **Zeroed** | Marked by an operator as accounted for                |
 
 > Once a fill is **Locked** or **Zeroed** it cannot be modified.
 

@@ -203,6 +203,15 @@ be used for integration testing to ensure that the tests are run in an environme
 any issues that may arise due to differences in the environment, such as database configuration or network settings. The tests should be run automatically as
 part of the CI/CD pipeline to ensure that any issues are identified and addressed quickly.
 
+Note! The different types of tests (unit, integration, end-to-end or contract) should have separate filename suffix. Unit test file names ends with UTC,
+integration test file names end with ITC and contract test file names end with CTC. This allows for easy identification of the type of test being run and helps
+to ensure that the appropriate tests are run at the appropriate times during the development process.
+
+The test case naming should be this pattern: <name of method being tested>_<scenario being tested>_<Ok|Fail>. In case of CTSs, the method name is that of
+the interface method responding to the particular REST API endpoint. This naming convention helps to clearly communicate the purpose of each test case and makes
+it easier for developers to understand what is being tested and what the expected outcome is. By following this naming convention, we can improve the
+readability and maintainability of our test cases, making it easier for developers to work with the tests and identify any issues that may arise during testing.
+
 The tests should be always be included in any AI agent task that involves modifying the codebase to ensure that the changes do not introduce any new issues or
 regressions. The tests should be comprehensive and cover all critical functionality of the backend, including authentication and authorization, user management,
 and data management. The tests should also cover edge cases and error handling to ensure that the backend is robust and can handle unexpected situations
