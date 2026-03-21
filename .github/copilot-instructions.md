@@ -31,7 +31,7 @@ The repository contains two subprojects:
 - **Security:** Spring Security with JWT stored in a cookie
 - **Email templates:** Thymeleaf (`spring-boot-starter-thymeleaf`)
 - **API documentation:** OpenAPI / Swagger (annotations on interfaces in the `api` module)
-- **Testing:** JUnit, Mockito, Testcontainers
+- **Testing:** JUnit, Mockito, Testcontainers, MockMvc for contract tests
 
 ## Project Structure
 
@@ -100,6 +100,8 @@ For contract tests the method name corresponds to the REST endpoint interface me
 
 - Use **JUnit 5** and **Mockito** for unit tests.
 - Use **Testcontainers** for integration tests that require a database.
+- Use **MockMvc** for contract tests that verify the API layer against the interface definitions in the `api` module.
+- Run tests with `./gradlew test` from the `oxalate-fillstation-backend/` directory.
 
 ### Frontend
 
@@ -117,24 +119,24 @@ The frontend build script (`generateBuildInfo.cjs`) reads `VERSION` and git tags
 
 ## CI/CD (`.github/workflows/ci.yml`)
 
-| Trigger | Jobs run |
-|---|---|
-| Push to any non-`main` branch | Build + test (frontend & backend) |
-| Push / merge to `main` | Build + test → semantic version tag → Docker images pushed to GHCR → GitHub Release created |
+| Trigger                       | Jobs run                                                                                    |
+|-------------------------------|---------------------------------------------------------------------------------------------|
+| Push to any non-`main` branch | Build + test (frontend & backend)                                                           |
+| Push / merge to `main`        | Build + test → semantic version tag → Docker images pushed to GHCR → GitHub Release created |
 
 Docker images are tagged: `latest`, `<major>`, `<major>.<minor>`, `<major>.<minor>.<patch>`.
 
 ## Roles
 
-| Role | Permissions |
-|---|---|
-| `ROLE_USER` | Own cylinders and fill entries only |
+| Role            | Permissions                                                                                  |
+|-----------------|----------------------------------------------------------------------------------------------|
+| `ROLE_USER`     | Own cylinders and fill entries only                                                          |
 | `ROLE_OPERATOR` | All user data (read); approve/reject registrations; zero-out fills; send notification emails |
-| `ROLE_ADMIN` | All of the above + manage application configuration |
+| `ROLE_ADMIN`    | All of the above + manage application configuration                                          |
 
 ## Security Considerations
 
 - JWT is stored in a **cookie** (not `localStorage`).
 - The JWT secret is provided via an environment variable and must never appear in source code.
 - The initial admin credentials for first-time setup are passed through a Docker Compose environment variable; the backend hashes the password before storing it.
-- The application must comply with GDPR — users can request anonymisation of their personal data.
+- The application must comply with GDPR — users can request anonymization of their personal data.
