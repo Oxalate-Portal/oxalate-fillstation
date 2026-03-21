@@ -10,6 +10,7 @@ const config = {
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/styleMock.js',
     '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/__mocks__/fileMock.js',
+    'buildInfo\\.json$': '<rootDir>/__mocks__/buildInfoMock.js',
   },
   transformIgnorePatterns: [
     '/node_modules/(?!(antd|@ant-design|rc-[a-z-]+|@rc-component)/).*',

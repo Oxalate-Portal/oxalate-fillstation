@@ -53,7 +53,7 @@ const LoginPage: React.FC = () => {
             </Button>
           </Form.Item>
         </Form>
-        <Space direction="vertical" style={{ width: '100%' }}>
+        <Space orientation="vertical" style={{ width: '100%' }}>
           <Link to="/forgot-password">{t('auth.forgotPassword')}</Link>
           <div>
             {t('auth.noAccount')} <Link to="/register">{t('auth.register')}</Link>
