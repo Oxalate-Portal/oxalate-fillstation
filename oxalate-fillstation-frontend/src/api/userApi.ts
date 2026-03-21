@@ -7,7 +7,7 @@ export const updateMe = (data: { name?: string; email?: string; language?: strin
 
 export const getLoginHistory = () => api.get('/api/users/me/login-history');
 
-export const anonymize = () => api.delete('/api/users/me');
+export const anonymize = () => api.post('/api/users/me/anonymize');
 
 export const getGasUsage = (userId?: number) => {
   const url = userId ? `/api/users/${userId}/gas-usage` : '/api/users/me/gas-usage';

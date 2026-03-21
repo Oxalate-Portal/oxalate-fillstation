@@ -25,7 +25,8 @@ The following environment variables must be set before starting the backend cont
 | `INITIAL_ADMIN_EMAIL`        | No       | Email address for the initial admin account                                 |
 | `INITIAL_ADMIN_PASSWORD`     | No       | Password for the initial admin account                                      |
 
-> If `INITIAL_ADMIN_EMAIL` and `INITIAL_ADMIN_PASSWORD` are set, the backend will create or update the admin account on startup. Use this to recover a forgotten admin password.
+> A default admin account (`admin@fillstation.local`) is seeded by Flyway. If `INITIAL_ADMIN_EMAIL` and `INITIAL_ADMIN_PASSWORD` are set, the backend will
+> create or update that account on startup and reset the password if the user already exists.
 
 #### 1.2 Running with Docker Compose
 
@@ -36,6 +37,13 @@ docker compose up -d
 ```
 
 Flyway migrations run automatically on first start and create all required database tables.
+The stack includes Traefik as reverse proxy (`http://localhost`) and a local Traefik dashboard at `http://localhost:8081`.
+
+#### 1.3 API Documentation (Swagger UI)
+
+When the backend is running locally, API documentation is available at:
+
+- `http://localhost:8080/swagger-ui/index.html`
 
 ---
 
@@ -45,7 +53,7 @@ Navigate to the **Operator Panel** in the sidebar.
 
 #### 2.1 Pending Registrations
 
-The **Pending Registrations** tab lists all accounts awaiting approval.
+The **Pending Registrations** tab lists all email-verified accounts awaiting approval.
 
 - **Approve**: Activates the account and sends an approval email to the user.
 - **Reject**: Locks the email address so it cannot be re-used for registration. No email is sent to the user.
@@ -66,8 +74,8 @@ The **Users** tab displays all registered accounts in a table with the following
 **Available actions per user:**
 
 - **Update status**: Change the account status (e.g. activate or lock an account).
+- **Send password reset**: Send a password reset link to the selected user.
 - **Zero fills**: Mark all **Active** and **Locked** fills of the user as **Zeroed** and reset their "since last zero" counter. The user receives an email notification.
-- **Send password reset**: Dispatch a password-reset link to the user's registered email address.
 
 #### 2.3 Notifying Users
 

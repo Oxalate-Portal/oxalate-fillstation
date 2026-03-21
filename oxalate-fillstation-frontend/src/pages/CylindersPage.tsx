@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, InputNumber, Space, Typography, Popconfirm, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
-import type { ColumnsType } from 'antd/es/table';
-import { getCylinders, createCylinder, updateCylinder, deleteCylinder } from '../api/cylinderApi';
-import type { Cylinder } from '../types';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Button, Form, Input, InputNumber, message, Modal, Popconfirm, Space, Table, Typography} from 'antd';
+import {PlusOutlined} from '@ant-design/icons';
+import {useTranslation} from 'react-i18next';
+import type {ColumnsType} from 'antd/es/table';
+import {createCylinder, deleteCylinder, getCylinders, updateCylinder} from '../api/cylinderApi';
+import type {Cylinder} from '../types';
 
 const { Title } = Typography;
 
@@ -17,15 +17,17 @@ const CylindersPage: React.FC = () => {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const fetchCylinders = () => {
+    const fetchCylinders = useCallback(() => {
     setLoading(true);
     getCylinders()
       .then((res) => setCylinders(res.data as Cylinder[]))
       .catch(() => message.error(t('common.error')))
       .finally(() => setLoading(false));
-  };
+    }, [t]);
 
-  useEffect(fetchCylinders, []);
+    useEffect(() => {
+        fetchCylinders();
+    }, [fetchCylinders]);
 
   const handleEdit = (record: Cylinder) => {
     setEditingCylinder(record);

@@ -4,6 +4,8 @@
 
 ### 1. Getting Started
 
+The application footer displays the current build version and build timestamp to help with support and troubleshooting.
+
 #### 1.1 Registration
 
 1. Open the application in your browser and click **Register**.
@@ -18,7 +20,7 @@
 
 1. Go to the **Login** page.
 2. Enter your registered email address and password.
-3. Click **Login**. On success you are redirected to your **Dashboard**.
+3. Click **Login**. On success, you are redirected to your **Dashboard**.
 
 #### 1.3 Forgotten Password
 

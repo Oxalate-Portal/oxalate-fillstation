@@ -1,22 +1,24 @@
 package io.oxalate.fillstation.service;
 
+import io.oxalate.fillstation.api.request.FillEntryRequest;
+import io.oxalate.fillstation.api.response.FillEntryResponse;
+import io.oxalate.fillstation.api.response.GasUsageSummary;
 import io.oxalate.fillstation.entity.Cylinder;
 import io.oxalate.fillstation.entity.FillEntry;
 import io.oxalate.fillstation.entity.FillStatus;
 import io.oxalate.fillstation.repository.CylinderRepository;
 import io.oxalate.fillstation.repository.FillEntryRepository;
-import io.oxalate.fillstation.api.request.FillEntryRequest;
-import io.oxalate.fillstation.api.response.FillEntryResponse;
-import io.oxalate.fillstation.api.response.GasUsageSummary;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FillEntryService {
@@ -41,6 +43,8 @@ public class FillEntryService {
     }
 
     public FillEntryResponse create(Long userId, FillEntryRequest request) {
+        validateGasPercentages(request);
+
         Cylinder cylinder = cylinderRepository.findByIdAndUserId(request.getCylinderId(), userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cylinder not found"));
 
@@ -74,6 +78,8 @@ public class FillEntryService {
     public FillEntryResponse update(Long userId, Long fillId, FillEntryRequest request) {
         FillEntry fill = fillEntryRepository.findByIdAndUserId(fillId, userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fill entry not found"));
+
+        validateGasPercentages(request);
 
         if (!isEditable(fill)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Fill entry is no longer editable");
@@ -114,8 +120,8 @@ public class FillEntryService {
     }
 
     public GasUsageSummary getGasUsage(Long userId) {
-        Object[] totals = fillEntryRepository.sumsByUserId(userId);
-        Object[] sinceZero = fillEntryRepository.sumsSinceLastZero(userId);
+        Object[] totals = normalizeAggregateRow(fillEntryRepository.sumsByUserId(userId));
+        Object[] sinceZero = normalizeAggregateRow(fillEntryRepository.sumsSinceLastZero(userId));
 
         return GasUsageSummary.builder()
                 .totalO2Added(toBigDecimal(totals[0]))
@@ -125,6 +131,22 @@ public class FillEntryService {
                 .sinceLastZeroHeAdded(toBigDecimal(sinceZero[1]))
                 .sinceLastZeroGasAdded(toBigDecimal(sinceZero[2]))
                 .build();
+    }
+
+    private Object[] normalizeAggregateRow(Object[] values) {
+        if (values == null || values.length == 0) {
+            return new Object[] { BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO };
+        }
+
+        // Hibernate/JPA may return a one-element wrapper whose first element is the actual tuple row.
+        if (values.length == 1 && values[0] instanceof Object[] nested) {
+            return normalizeAggregateRow(nested);
+        }
+
+        Object first = values.length > 0 ? values[0] : BigDecimal.ZERO;
+        Object second = values.length > 1 ? values[1] : BigDecimal.ZERO;
+        Object third = values.length > 2 ? values[2] : BigDecimal.ZERO;
+        return new Object[] { first, second, third };
     }
 
     public void zeroFills(Long userId, String userEmail, String userName, String userLanguage) {
@@ -182,10 +204,49 @@ public class FillEntryService {
         return fill.getCreatedAt().isAfter(LocalDateTime.now().minusHours(EDIT_WINDOW_HOURS));
     }
 
+    private void validateGasPercentages(FillEntryRequest request) {
+        if (request.getStartO2Percentage()
+                   .compareTo(BigDecimal.ZERO) <= 0
+                || request.getEndO2Percentage()
+                          .compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Oxygen percentages must be greater than zero");
+        }
+
+        if (request.getStartHePercentage()
+                   .compareTo(BigDecimal.ZERO) > 0
+                && request.getEndHePercentage()
+                          .compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "End helium percentage must be greater than zero when start helium is greater than zero");
+        }
+    }
+
     private BigDecimal toBigDecimal(Object value) {
-        if (value == null) return BigDecimal.ZERO;
-        if (value instanceof BigDecimal bd) return bd;
-        return new BigDecimal(value.toString());
+        if (value == null) {
+            return BigDecimal.ZERO;
+        }
+
+        if (value instanceof BigDecimal bd) {
+            return bd;
+        }
+
+        if (value instanceof Number number) {
+            return new BigDecimal(number.toString());
+        }
+
+        String raw = value.toString();
+        if (raw == null || raw.trim()
+                              .isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+
+        try {
+            return new BigDecimal(raw.trim());
+        } catch (NumberFormatException ex) {
+            // Some JDBC drivers can return unexpected textual values for aggregate fields.
+            log.warn("Unexpected aggregate numeric value '{}'; defaulting to 0", raw);
+            return BigDecimal.ZERO;
+        }
     }
 
     private FillEntryResponse toResponse(FillEntry f, boolean editable) {

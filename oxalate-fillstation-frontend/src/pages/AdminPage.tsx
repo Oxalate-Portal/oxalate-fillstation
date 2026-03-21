@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, Space, Typography, Popconfirm, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
-import type { ColumnsType } from 'antd/es/table';
-import { getConfig, createConfig, updateConfig, deleteConfig } from '../api/adminApi';
-import type { Configuration } from '../types';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Button, Form, Input, message, Modal, Popconfirm, Space, Table, Typography} from 'antd';
+import {PlusOutlined} from '@ant-design/icons';
+import {useTranslation} from 'react-i18next';
+import type {ColumnsType} from 'antd/es/table';
+import {createConfig, deleteConfig, getConfig, updateConfig} from '../api/adminApi';
+import type {Configuration} from '../types';
 
 const { Title } = Typography;
 
@@ -17,8 +17,13 @@ const AdminPage: React.FC = () => {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const fetchConfigs = () => { setLoading(true); getConfig().then((r) => setConfigs(r.data as Configuration[])).catch(() => message.error(t('common.error'))).finally(() => setLoading(false)); };
-  useEffect(fetchConfigs, []);
+    const fetchConfigs = useCallback(() => {
+        setLoading(true);
+        getConfig().then((r) => setConfigs(r.data as Configuration[])).catch(() => message.error(t('common.error'))).finally(() => setLoading(false));
+    }, [t]);
+    useEffect(() => {
+        fetchConfigs();
+    }, [fetchConfigs]);
 
   const handleEdit = (record: Configuration) => { setEditingConfig(record); form.setFieldsValue(record); setModalOpen(true); };
   const handleDelete = async (id: number) => { try { await deleteConfig(id); message.success(t('common.success')); fetchConfigs(); } catch { message.error(t('common.error')); } };

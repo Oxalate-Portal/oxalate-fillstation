@@ -53,6 +53,12 @@ public interface UserApi {
     ResponseEntity<MessageResponse> anonymize(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails);
 
+    @Operation(summary = "Get gas usage summary for current user")
+    @ApiResponse(responseCode = "200", description = "Gas usage summary returned")
+    @GetMapping("/me/gas-usage")
+    ResponseEntity<GasUsageSummary> getMyGasUsage(
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails);
+
     @Operation(summary = "Get gas usage summary for a user")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Gas usage summary returned"),

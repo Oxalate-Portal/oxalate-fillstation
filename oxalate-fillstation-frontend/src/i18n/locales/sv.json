@@ -28,7 +28,9 @@
     "operator": "Operatörspanel",
     "admin": "Administrationspanel",
     "logout": "Logga ut",
-    "profile": "Profil"
+    "profile" : "Profil",
+    "version" : "Version",
+    "buildDate" : "Byggdatum"
   },
   "dashboard": {
     "title": "Instrumentpanel",
@@ -90,10 +92,12 @@
     "reject": "Avvisa",
     "zeroFills": "Nollställ fyllningar",
     "notifyUsers": "Meddela användare",
+    "sendPasswordReset" : "Skicka lösenordsåterställning",
     "userStatus": "Använderstatus",
     "activate": "Aktivera",
     "lock": "Lås",
     "notifySuccess": "Användare meddelades",
+    "passwordResetSent" : "E-post för lösenordsåterställning skickad",
     "zeroFillsSuccess": "Fyllningar nollställdes",
     "approveSuccess": "Registrering godkänd",
     "rejectSuccess": "Registrering avvisad"

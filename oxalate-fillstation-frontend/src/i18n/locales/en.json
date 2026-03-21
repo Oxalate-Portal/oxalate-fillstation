@@ -28,7 +28,9 @@
     "operator": "Operator Panel",
     "admin": "Admin Panel",
     "logout": "Logout",
-    "profile": "Profile"
+    "profile" : "Profile",
+    "version" : "Version",
+    "buildDate" : "Build date"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -90,10 +92,12 @@
     "reject": "Reject",
     "zeroFills": "Zero Fills",
     "notifyUsers": "Notify Users",
+    "sendPasswordReset" : "Send password reset",
     "userStatus": "User Status",
     "activate": "Activate",
     "lock": "Lock",
     "notifySuccess": "Users notified successfully",
+    "passwordResetSent" : "Password reset email sent",
     "zeroFillsSuccess": "Fills zeroed successfully",
     "approveSuccess": "Registration approved",
     "rejectSuccess": "Registration rejected"

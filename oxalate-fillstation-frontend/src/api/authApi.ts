@@ -9,7 +9,7 @@ export const register = (data: { name: string; email: string; password: string; 
 export const logout = () => api.post('/api/auth/logout');
 
 export const verifyEmail = (token: string) =>
-  api.post('/api/auth/verify-email', { token });
+    api.get('/api/auth/verify-email', {params: {token}});
 
 export const forgotPassword = (email: string) =>
   api.post('/api/auth/forgot-password', { email });

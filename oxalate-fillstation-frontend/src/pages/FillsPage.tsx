@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, InputNumber, DatePicker, Space, Typography, Popconfirm, Tag, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
-import type { ColumnsType } from 'antd/es/table';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Button, DatePicker, Form, Input, InputNumber, message, Modal, Popconfirm, Space, Table, Tag, Typography} from 'antd';
+import {PlusOutlined} from '@ant-design/icons';
+import {useTranslation} from 'react-i18next';
+import type {ColumnsType} from 'antd/es/table';
 import dayjs from 'dayjs';
-import { getFills, createFill, updateFill, deleteFill } from '../api/fillApi';
-import type { FillEntry, FillStatus } from '../types';
+import {createFill, deleteFill, getFills, updateFill} from '../api/fillApi';
+import type {FillEntry, FillStatus} from '../types';
 
 const { Title } = Typography;
 
@@ -24,15 +24,17 @@ const FillsPage: React.FC = () => {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const fetchFills = () => {
+    const fetchFills = useCallback(() => {
     setLoading(true);
     getFills()
       .then((res) => setFills(res.data as FillEntry[]))
       .catch(() => message.error(t('common.error')))
       .finally(() => setLoading(false));
-  };
+    }, [t]);
 
-  useEffect(fetchFills, []);
+    useEffect(() => {
+        fetchFills();
+    }, [fetchFills]);
 
   const handleEdit = (record: FillEntry) => {
     setEditingFill(record);

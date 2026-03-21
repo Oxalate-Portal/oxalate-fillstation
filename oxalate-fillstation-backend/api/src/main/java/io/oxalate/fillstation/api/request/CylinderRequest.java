@@ -25,6 +25,7 @@ public class CylinderRequest {
     @Schema(description = "Working pressure in bar", example = "232.0")
     private BigDecimal workingPressure;
 
+    @NotBlank
     @Schema(description = "Cylinder serial number", example = "SN123456")
     private String serialNumber;
 }

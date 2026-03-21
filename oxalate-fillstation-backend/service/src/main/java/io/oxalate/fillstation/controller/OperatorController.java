@@ -42,12 +42,12 @@ public class OperatorController implements OperatorApi {
 
     @Override
     public ResponseEntity<UserResponse> approveRegistration(Long id) {
-        return ResponseEntity.ok(userService.updateUserStatus(id, "ACTIVE"));
+        return ResponseEntity.ok(userService.approvePendingRegistration(id));
     }
 
     @Override
     public ResponseEntity<UserResponse> rejectRegistration(Long id) {
-        return ResponseEntity.ok(userService.updateUserStatus(id, "LOCKED"));
+        return ResponseEntity.ok(userService.rejectPendingRegistration(id));
     }
 
     @Override

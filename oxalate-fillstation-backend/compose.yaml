@@ -1,9 +1,70 @@
 services:
-  postgres:
-    image: 'postgres:18-alpine'
-    environment:
-      - 'POSTGRES_DB=fillstation'
-      - 'POSTGRES_PASSWORD=oxalate_password'
-      - 'POSTGRES_USER=oxalate'
+  traefik:
+    image: traefik:v3.5
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --api.insecure=true
     ports:
-      - '5432'
+      - "80:80"
+      - "8081:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - web
+
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: fillstation
+      POSTGRES_PASSWORD: oxalate_password
+      POSTGRES_USER: oxalate
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - web
+
+  backend:
+    build:
+      context: .
+      dockerfile: service/Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fillstation?currentSchema=fillstation
+      SPRING_DATASOURCE_USERNAME: oxalate
+      SPRING_DATASOURCE_PASSWORD: oxalate_password
+      SPRING_DOCKER_COMPOSE_ENABLED: "false"
+      JWT_SECRET: changeme-at-least-32-chars-long-secret-key
+      APP_BASE_URL: http://localhost
+      INITIAL_ADMIN_EMAIL: admin@fillstation.local
+      INITIAL_ADMIN_PASSWORD: admin12345
+    depends_on:
+      - postgres
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backend.rule=PathPrefix(`/api`) || PathPrefix(`/swagger-ui`) || PathPrefix(`/v3/api-docs`) || PathPrefix(`/actuator`)
+      - traefik.http.routers.backend.entrypoints=web
+      - traefik.http.services.backend.loadbalancer.server.port=8080
+
+  frontend:
+    build:
+      context: ../oxalate-fillstation-frontend
+    depends_on:
+      - backend
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.rule=PathPrefix(`/`)
+      - traefik.http.routers.frontend.entrypoints=web
+      - traefik.http.services.frontend.loadbalancer.server.port=80
+
+volumes:
+  postgres-data:
+
+networks:
+  web:

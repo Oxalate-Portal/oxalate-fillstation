@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import { Layout, Menu, Button, theme, message } from 'antd';
+import React, {useState} from 'react';
+import {Button, Layout, Menu, message, theme} from 'antd';
 import {
-  DashboardOutlined,
-  ExperimentOutlined,
-  FileTextOutlined,
-  TeamOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+    DashboardOutlined,
+    ExperimentOutlined,
+    FileTextOutlined,
+    LogoutOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    SettingOutlined,
+    TeamOutlined,
 } from '@ant-design/icons';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useAuth } from '../context/AuthContext';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {useAuth} from '../context/AuthContext';
+import buildInfo from '../buildInfo.json';
 
-const { Sider, Content, Header } = Layout;
+const {Sider, Content, Header, Footer} = Layout;
 
 interface NavigationProps {
   children: React.ReactNode;
@@ -138,6 +139,17 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
         >
           {children}
         </Content>
+          <Footer
+                  style={{
+                      background: token.colorBgContainer,
+                      padding: '12px 24px',
+                      color: token.colorTextDescription,
+                      textAlign: 'right',
+                      fontSize: 12,
+                  }}
+          >
+              {t('nav.version')}: {buildInfo.version} | {t('nav.buildDate')}: {buildInfo.buildTime}
+          </Footer>
       </Layout>
     </Layout>
   );

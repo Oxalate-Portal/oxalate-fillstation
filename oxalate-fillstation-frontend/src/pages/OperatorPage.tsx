@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Tabs, Table, Button, Space, Typography, Tag, Popconfirm, message } from 'antd';
-import { useTranslation } from 'react-i18next';
-import type { ColumnsType } from 'antd/es/table';
-import { getUsers, getPendingRegistrations, approveRegistration, rejectRegistration, updateUserStatus, zeroUserFills, notifyUsers } from '../api/operatorApi';
-import type { User, UserStatus } from '../types';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Button, message, Popconfirm, Space, Table, Tabs, Tag, Typography} from 'antd';
+import {useTranslation} from 'react-i18next';
+import type {ColumnsType} from 'antd/es/table';
+import {approveRegistration, getPendingRegistrations, getUsers, notifyUsers, rejectRegistration, updateUserStatus, zeroUserFills} from '../api/operatorApi';
+import {forgotPassword} from '../api/authApi';
+import type {User, UserStatus} from '../types';
 
 const { Title } = Typography;
 
@@ -15,15 +16,32 @@ const OperatorPage: React.FC = () => {
   const [pendingLoading, setPendingLoading] = useState(true);
   const [notifyLoading, setNotifyLoading] = useState(false);
 
-  const fetchUsers = () => { setUsersLoading(true); getUsers().then((r) => setUsers(r.data as User[])).catch(() => message.error(t('common.error'))).finally(() => setUsersLoading(false)); };
-  const fetchPending = () => { setPendingLoading(true); getPendingRegistrations().then((r) => setPendingUsers(r.data as User[])).catch(() => message.error(t('common.error'))).finally(() => setPendingLoading(false)); };
+    const fetchUsers = useCallback(() => {
+        setUsersLoading(true);
+        getUsers().then((r) => setUsers(r.data as User[])).catch(() => message.error(t('common.error'))).finally(() => setUsersLoading(false));
+    }, [t]);
+    const fetchPending = useCallback(() => {
+        setPendingLoading(true);
+        getPendingRegistrations().then((r) => setPendingUsers(r.data as User[])).catch(() => message.error(t('common.error'))).finally(() => setPendingLoading(false));
+    }, [t]);
 
-  useEffect(() => { fetchUsers(); fetchPending(); }, []);
+    useEffect(() => {
+        fetchUsers();
+        fetchPending();
+    }, [fetchPending, fetchUsers]);
 
   const handleApprove = async (id: number) => { try { await approveRegistration(id); message.success(t('operator.approveSuccess')); fetchPending(); } catch { message.error(t('common.error')); } };
   const handleReject = async (id: number) => { try { await rejectRegistration(id); message.success(t('operator.rejectSuccess')); fetchPending(); } catch { message.error(t('common.error')); } };
   const handleUpdateStatus = async (id: number, status: UserStatus) => { try { await updateUserStatus(id, status); message.success(t('common.success')); fetchUsers(); } catch { message.error(t('common.error')); } };
   const handleZeroFills = async (userId: number) => { try { await zeroUserFills(userId); message.success(t('operator.zeroFillsSuccess')); } catch { message.error(t('common.error')); } };
+    const handleSendPasswordReset = async (email: string) => {
+        try {
+            await forgotPassword(email);
+            message.success(t('operator.passwordResetSent'));
+        } catch {
+            message.error(t('common.error'));
+        }
+    };
   const handleNotify = async () => { setNotifyLoading(true); try { await notifyUsers(); message.success(t('operator.notifySuccess')); } catch { message.error(t('common.error')); } finally { setNotifyLoading(false); } };
 
   const userColumns: ColumnsType<User> = [
@@ -35,6 +53,7 @@ const OperatorPage: React.FC = () => {
       <Space>
         {record.status !== 'ACTIVE' && <Button size="small" onClick={() => handleUpdateStatus(record.id, 'ACTIVE')}>{t('operator.activate')}</Button>}
         {record.status !== 'LOCKED' && <Button size="small" danger onClick={() => handleUpdateStatus(record.id, 'LOCKED')}>{t('operator.lock')}</Button>}
+          <Button size="small" onClick={() => handleSendPasswordReset(record.email)}>{t('operator.sendPasswordReset')}</Button>
         <Popconfirm title={t('operator.zeroFills')} onConfirm={() => handleZeroFills(record.id)} okText={t('common.yes')} cancelText={t('common.no')}>
           <Button size="small">{t('operator.zeroFills')}</Button>
         </Popconfirm>

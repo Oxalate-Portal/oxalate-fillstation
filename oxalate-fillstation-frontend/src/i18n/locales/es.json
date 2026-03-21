@@ -28,7 +28,9 @@
     "operator": "Panel de operador",
     "admin": "Panel de administración",
     "logout": "Cerrar sesión",
-    "profile": "Perfil"
+    "profile" : "Perfil",
+    "version" : "Versión",
+    "buildDate" : "Fecha de compilación"
   },
   "dashboard": {
     "title": "Panel",
@@ -90,10 +92,12 @@
     "reject": "Rechazar",
     "zeroFills": "Poner a cero",
     "notifyUsers": "Notificar usuarios",
+    "sendPasswordReset" : "Enviar restablecimiento de contraseña",
     "userStatus": "Estado del usuario",
     "activate": "Activar",
     "lock": "Bloquear",
     "notifySuccess": "Usuarios notificados correctamente",
+    "passwordResetSent" : "Correo de restablecimiento enviado",
     "zeroFillsSuccess": "Rellenos puestos a cero correctamente",
     "approveSuccess": "Registro aprobado",
     "rejectSuccess": "Registro rechazado"

@@ -1,12 +1,12 @@
 package io.oxalate.fillstation.service;
 
+import io.oxalate.fillstation.api.request.UserUpdateRequest;
+import io.oxalate.fillstation.api.response.UserResponse;
 import io.oxalate.fillstation.entity.LockedEmail;
 import io.oxalate.fillstation.entity.User;
 import io.oxalate.fillstation.entity.UserStatus;
 import io.oxalate.fillstation.repository.LockedEmailRepository;
 import io.oxalate.fillstation.repository.UserRepository;
-import io.oxalate.fillstation.api.request.UserUpdateRequest;
-import io.oxalate.fillstation.api.response.UserResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -56,7 +56,10 @@ public class UserService {
     }
 
     public List<UserResponse> getPendingRegistrations() {
-        return userRepository.findByStatus(UserStatus.PENDING).stream().map(this::toResponse).toList();
+        return userRepository.findByStatusAndEmailVerifiedTrue(UserStatus.PENDING)
+                             .stream()
+                             .map(this::toResponse)
+                             .toList();
     }
 
     public UserResponse updateUserStatus(Long userId, String statusStr) {
@@ -71,6 +74,26 @@ public class UserService {
             emailService.sendAccountApprovedEmail(user.getEmail(), user.getName(), user.getLanguage());
         }
         return toResponse(user);
+    }
+
+    @Transactional
+    public UserResponse approvePendingRegistration(Long userId) {
+        User user = findUser(userId);
+        if (!user.isEmailVerified()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User email is not verified");
+        }
+        return updateUserStatus(userId, UserStatus.ACTIVE.name());
+    }
+
+    @Transactional
+    public UserResponse rejectPendingRegistration(Long userId) {
+        User user = findUser(userId);
+        if (!lockedEmailRepository.existsByEmail(user.getEmail())) {
+            lockedEmailRepository.save(LockedEmail.builder()
+                                                  .email(user.getEmail())
+                                                  .build());
+        }
+        return updateUserStatus(userId, UserStatus.LOCKED.name());
     }
 
     @Transactional

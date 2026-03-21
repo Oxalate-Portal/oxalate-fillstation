@@ -6,10 +6,11 @@ import org.springframework.context.annotation.Import;
 
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest
-class ApplicationTests {
+class ApplicationITC {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads_defaultContext_Ok() {
+    }
 
 }
+

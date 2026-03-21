@@ -28,7 +28,9 @@
     "operator": "Operaattoripaneeli",
     "admin": "Hallintapaneeli",
     "logout": "Kirjaudu ulos",
-    "profile": "Profiili"
+    "profile" : "Profiili",
+    "version" : "Versio",
+    "buildDate" : "Rakennuspäivä"
   },
   "dashboard": {
     "title": "Kojelauta",
@@ -90,10 +92,12 @@
     "reject": "Hylkää",
     "zeroFills": "Nollaa täytöt",
     "notifyUsers": "Ilmoita käyttäjille",
+    "sendPasswordReset" : "Lähetä salasanan palautus",
     "userStatus": "Käyttäjän tila",
     "activate": "Aktivoi",
     "lock": "Lukitse",
     "notifySuccess": "Käyttäjille ilmoitettu onnistuneesti",
+    "passwordResetSent" : "Salasanan palautussähköposti lähetetty",
     "zeroFillsSuccess": "Täytöt nollattu onnistuneesti",
     "approveSuccess": "Rekisteröinti hyväksytty",
     "rejectSuccess": "Rekisteröinti hylätty"

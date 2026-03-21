@@ -4,8 +4,9 @@
   "version" : "0.0.0",
   "type" : "module",
   "scripts" : {
+    "prebuild" : "node generateBuildInfo.cjs",
     "start" : "vite",
-    "build" : "tsc -b && vite build",
+    "build" : "yarn prebuild && tsc -b && vite build",
     "lint" : "eslint .",
     "preview" : "vite preview",
     "test" : "jest --config jest.config.cjs"

@@ -1,5 +1,10 @@
 package io.oxalate.fillstation.service;
 
+import io.oxalate.fillstation.api.request.LoginRequest;
+import io.oxalate.fillstation.api.request.PasswordChangeRequest;
+import io.oxalate.fillstation.api.request.PasswordResetRequest;
+import io.oxalate.fillstation.api.request.RegistrationRequest;
+import io.oxalate.fillstation.api.response.LoginResponse;
 import io.oxalate.fillstation.entity.EmailToken;
 import io.oxalate.fillstation.entity.RoleType;
 import io.oxalate.fillstation.entity.TokenType;
@@ -10,11 +15,6 @@ import io.oxalate.fillstation.repository.LockedEmailRepository;
 import io.oxalate.fillstation.repository.RoleRepository;
 import io.oxalate.fillstation.repository.UserRepository;
 import io.oxalate.fillstation.security.JwtTokenProvider;
-import io.oxalate.fillstation.api.request.LoginRequest;
-import io.oxalate.fillstation.api.request.PasswordChangeRequest;
-import io.oxalate.fillstation.api.request.PasswordResetRequest;
-import io.oxalate.fillstation.api.request.RegistrationRequest;
-import io.oxalate.fillstation.api.response.LoginResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
@@ -128,7 +128,11 @@ public class AuthService {
         User user = userRepository.findById(emailToken.getUserId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        // Mark email as verified but keep PENDING for operator approval
+        user.setEmailVerified(true);
+        user.setUpdatedAt(LocalDateTime.now());
+        userRepository.save(user);
+
+        // Keep account in PENDING until operator/admin approval
         emailTokenRepository.delete(emailToken);
     }
 

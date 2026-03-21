@@ -1,7 +1,6 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import GasUsageCard from '../GasUsageCard';
-import type { GasUsageSummary } from '../../types';
+import type {GasUsageSummary} from '../../types';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),

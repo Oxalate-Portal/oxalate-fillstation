@@ -34,22 +34,33 @@ public class InitialAdminService {
         Role adminRole = roleRepository.findByRoleName(RoleType.ROLE_ADMIN)
                 .orElseThrow(() -> new IllegalStateException("ROLE_ADMIN not found in database"));
 
-        if (userRepository.existsByEmail(adminEmail)) {
-            log.info("Admin user '{}' already exists; skipping creation.", adminEmail);
-            return;
-        }
+        userRepository.findByEmail(adminEmail)
+                      .ifPresentOrElse(existingAdmin -> {
+                          Set<Role> roles = existingAdmin.getRoles() == null ? new HashSet<>() : existingAdmin.getRoles();
+                          roles.add(adminRole);
 
-        User admin = User.builder()
-                .name("Administrator")
-                .email(adminEmail)
-                .password(passwordEncoder.encode(adminPassword))
-                .language("en")
-                .status(UserStatus.ACTIVE)
-                .roles(new HashSet<>(Set.of(adminRole)))
-                .updatedAt(LocalDateTime.now())
-                .build();
+                          existingAdmin.setRoles(roles);
+                          existingAdmin.setStatus(UserStatus.ACTIVE);
+                          existingAdmin.setEmailVerified(true);
+                          existingAdmin.setPassword(passwordEncoder.encode(adminPassword));
+                          existingAdmin.setUpdatedAt(LocalDateTime.now());
 
-        userRepository.save(admin);
-        log.info("Initial admin user '{}' created successfully.", adminEmail);
+                          userRepository.save(existingAdmin);
+                          log.info("Admin user '{}' already existed; password and admin role were updated.", adminEmail);
+                      }, () -> {
+                          User admin = User.builder()
+                                           .name("Administrator")
+                                           .email(adminEmail)
+                                           .password(passwordEncoder.encode(adminPassword))
+                                           .language("en")
+                                           .status(UserStatus.ACTIVE)
+                                           .emailVerified(true)
+                                           .roles(new HashSet<>(Set.of(adminRole)))
+                                           .updatedAt(LocalDateTime.now())
+                                           .build();
+
+                          userRepository.save(admin);
+                          log.info("Initial admin user '{}' created successfully.", adminEmail);
+                      });
     }
 }

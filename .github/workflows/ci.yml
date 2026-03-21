@@ -1,0 +1,200 @@
+name: Unified CI/CD
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+
+jobs:
+  build-and-test:
+    name: Build and test frontend + backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install frontend dependencies
+        working-directory: oxalate-fillstation-frontend
+        run: yarn install --immutable
+
+      - name: Lint and test frontend
+        working-directory: oxalate-fillstation-frontend
+        run: |
+          yarn lint
+          yarn test
+
+      - name: Build frontend
+        working-directory: oxalate-fillstation-frontend
+        run: yarn build
+
+      - name: Build and test backend
+        working-directory: oxalate-fillstation-backend
+        run: ./gradlew --no-daemon clean test bootJar
+
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: oxalate-fillstation-frontend/dist
+
+      - name: Upload backend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-jars
+          if-no-files-found: warn
+          path: |
+            oxalate-fillstation-backend/api/build/libs/*.jar
+            oxalate-fillstation-backend/service/build/libs/*.jar
+
+  release-and-publish:
+    name: Release and publish images
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Resolve semantic version
+        id: semver
+        shell: bash
+        run: |
+          set -euo pipefail
+          base_version="$(tr -d '[:space:]' < VERSION)"
+          if [[ ! "$base_version" =~ ^([0-9]+)\.([0-9]+)$ ]]; then
+            echo "Invalid VERSION value: '$base_version'" >&2
+            exit 1
+          fi
+
+          major="${BASH_REMATCH[1]}"
+          minor="${BASH_REMATCH[2]}"
+
+          git fetch --tags --force
+          max_patch=""
+          while IFS= read -r tag; do
+            normalized="${tag#v}"
+            if [[ "$normalized" =~ ^${major}\.${minor}\.([0-9]+)$ ]]; then
+              patch="${BASH_REMATCH[1]}"
+              if [[ -z "$max_patch" || "$patch" -gt "$max_patch" ]]; then
+                max_patch="$patch"
+              fi
+            fi
+          done < <(git tag --list)
+
+          if [[ -z "$max_patch" ]]; then
+            patch="0"
+          else
+            patch="$((max_patch + 1))"
+          fi
+
+          version="${major}.${minor}.${patch}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "major=$major" >> "$GITHUB_OUTPUT"
+          echo "minor=${major}.${minor}" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push git tag
+        env:
+          VERSION: ${{ steps.semver.outputs.version }}
+        run: |
+          if git rev-parse "$VERSION" >/dev/null 2>&1; then
+            echo "Tag $VERSION already exists; skipping tag creation."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git tag "$VERSION"
+            git push origin "$VERSION"
+          fi
+
+      - name: Install frontend dependencies
+        working-directory: oxalate-fillstation-frontend
+        run: yarn install --immutable
+
+      - name: Build frontend with release version
+        working-directory: oxalate-fillstation-frontend
+        env:
+          BUILD_VERSION: ${{ steps.semver.outputs.version }}
+        run: yarn build
+
+      - name: Build backend with release version
+        working-directory: oxalate-fillstation-backend
+        run: ./gradlew --no-daemon clean test bootJar -PreleaseVersion=${{ steps.semver.outputs.version }}
+
+      - name: Set lower-case owner
+        id: owner
+        run: echo "value=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: oxalate-fillstation-backend
+          file: oxalate-fillstation-backend/service/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-backend:latest
+            ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-backend:${{ steps.semver.outputs.major }}
+            ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-backend:${{ steps.semver.outputs.minor }}
+            ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-backend:${{ steps.semver.outputs.version }}
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: oxalate-fillstation-frontend
+          push: true
+          build-args: |
+            BUILD_VERSION=${{ steps.semver.outputs.version }}
+          tags: |
+            ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-frontend:latest
+            ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-frontend:${{ steps.semver.outputs.major }}
+            ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-frontend:${{ steps.semver.outputs.minor }}
+            ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-frontend:${{ steps.semver.outputs.version }}
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.semver.outputs.version }}
+          generate_release_notes: true

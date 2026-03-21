@@ -173,6 +173,47 @@ The frontend UI should use react-i18next to handle all translations pertaining t
 languages in all the other communication such as emails with the user. The backend can use spring-boot-starter-thymeleaf for email templates in different
 languages.
 
+## Versioning
+
+The project contains a file named VERSION in the root of the repository which contains the current <major>.<minor> version of the application. The version
+should be used as a base for the semantic versioning of the docker images as well as the releases in GitHub. The patch version is derived from the existing
+tags, and if no tag with the given major and minor version exists, the patch version is set to 0. For example, if the current version in the VERSION file is 1.2
+and there are existing tags 1.2.0, 1.2.1 and 1.2.2, the next patch version will be 1.2.3. If there are no existing tags with the major version 1 and minor
+version 2, the next patch version will be 1.2.0.
+
+### Frontend
+
+The frontend needs to display the current version of the application in the UI. For this purpose there is a separate script in the frontend sub-directory
+called `generateBuildInfo.cjs` which both reads the version from the VERSION file as well as takes in the tags with the git command and generates a
+`buildInfo.json` file in the frontend src-directory which contains the version as well as the build date. This file shall then be imported in the frontend
+codebase and the version displayed in the footer of the UI. This allows users to easily identify the version of the application they are using, which can be
+helpful for troubleshooting and support purposes.
+
+## GitHub workflow
+
+There should be one unified GitHub workflow for both the frontend and the backend. This workflow should include steps for building, testing, tagging the commit
+with semantic version and creating a docker image for both the frontend and the backend. The workflow should also upload the docker images to the GitHub
+container registry. Finally the workflow should also add a release to the repository in GitHub.
+
+The workflow should be split in the following manner:
+
+Any commit to other branch but the main branch should trigger a workflow that builds and tests the code, but does not create or upload any docker images. This
+allows for quick feedback on the changes being made without the overhead of building and uploading docker images, which can be time-consuming.
+
+Any merge to the main branch should trigger a workflow that builds and creates docker images for both the frontend and the backend, and then uploads those
+images to the GitHub container registry. This ensures that the latest version of the application is always available in the container registry and can be easily
+deployed to production or other environments as needed. The workflow should tag the uploaded images in the following manner: <image name>:latest,
+<image name>:<major version>, <image name>:<major version>.<minor version> and <image name>:<major version>.<minor version>.<patch version>.
+
+As an example: If the current version of the backend is 1.2.3, the workflow should tag the uploaded image as follows: backend:latest, backend:1, backend:1.2 and
+backend:1.2.3.
+
+The workflow uses this semantic version to tag the release in GitHub as well. The release should be tagged with the same version as the docker images, and the
+release notes should include a summary of the changes included in the release, as well as any relevant information for users or developers.
+
+This allows for easy identification of the latest version of the image, as well as the specific version associated with a particular commit. By following this
+workflow, we can ensure that our code is thoroughly tested and that our docker images are always up-to-date and available for deployment.
+
 ## Documentation
 
 The codebase should be well-documented with clear and concise comments explaining the purpose and functionality of each component, function, and class. In

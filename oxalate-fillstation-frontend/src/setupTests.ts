@@ -1,5 +1,20 @@
 import '@testing-library/jest-dom';
 
+declare const require: (moduleName: string) => {
+    TextEncoder: typeof globalThis.TextEncoder;
+    TextDecoder: typeof globalThis.TextDecoder;
+};
+
+if (!globalThis.TextEncoder || !globalThis.TextDecoder) {
+    const util = require('util');
+    if (!globalThis.TextEncoder) {
+        globalThis.TextEncoder = util.TextEncoder;
+    }
+    if (!globalThis.TextDecoder) {
+        globalThis.TextDecoder = util.TextDecoder;
+    }
+}
+
 // Mock matchMedia for Ant Design components
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

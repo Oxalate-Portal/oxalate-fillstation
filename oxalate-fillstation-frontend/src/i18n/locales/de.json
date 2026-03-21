@@ -28,7 +28,9 @@
     "operator": "Bediener-Panel",
     "admin": "Admin-Panel",
     "logout": "Abmelden",
-    "profile": "Profil"
+    "profile" : "Profil",
+    "version" : "Version",
+    "buildDate" : "Build-Datum"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -90,10 +92,12 @@
     "reject": "Ablehnen",
     "zeroFills": "Füllungen nullstellen",
     "notifyUsers": "Benutzer benachrichtigen",
+    "sendPasswordReset" : "Passwort-Reset senden",
     "userStatus": "Benutzerstatus",
     "activate": "Aktivieren",
     "lock": "Sperren",
     "notifySuccess": "Benutzer erfolgreich benachrichtigt",
+    "passwordResetSent" : "Passwort-Reset-E-Mail gesendet",
     "zeroFillsSuccess": "Füllungen erfolgreich nullgestellt",
     "approveSuccess": "Registrierung genehmigt",
     "rejectSuccess": "Registrierung abgelehnt"

@@ -48,6 +48,12 @@ public class UserController implements UserApi {
     }
 
     @Override
+    public ResponseEntity<GasUsageSummary> getMyGasUsage(UserDetails userDetails) {
+        UserResponse user = userService.getUserByEmail(userDetails.getUsername());
+        return ResponseEntity.ok(fillEntryService.getGasUsage(user.getId()));
+    }
+
+    @Override
     public ResponseEntity<GasUsageSummary> getGasUsage(Long id) {
         return ResponseEntity.ok(fillEntryService.getGasUsage(id));
     }
