@@ -21,11 +21,11 @@ public interface FillEntryRepository extends JpaRepository<FillEntry, Long> {
 
     @Query("SELECT COALESCE(SUM(f.o2Added),0), COALESCE(SUM(f.heAdded),0), COALESCE(SUM(f.gasAdded),0) " +
             "FROM FillEntry f WHERE f.userId = :userId")
-    Object[] sumsByUserId(@Param("userId") Long userId);
+    List<Object[]> sumsByUserId(@Param("userId") Long userId);
 
     @Query("SELECT COALESCE(SUM(f.o2Added),0), COALESCE(SUM(f.heAdded),0), COALESCE(SUM(f.gasAdded),0) " +
             "FROM FillEntry f WHERE f.userId = :userId AND f.status != 'ZEROED'")
-    Object[] sumsSinceLastZero(@Param("userId") Long userId);
+    List<Object[]> sumsSinceLastZero(@Param("userId") Long userId);
 
     List<FillEntry> findByStatus(FillStatus status);
 }

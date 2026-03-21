@@ -23,6 +23,7 @@ public class FillEntryService {
 
     private static final int EDIT_WINDOW_HOURS = 24;
     private static final int SCALE = 4;
+    private static final Object[] ZERO_GAS_USAGE = new Object[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
 
     private final FillEntryRepository fillEntryRepository;
     private final CylinderRepository cylinderRepository;
@@ -114,8 +115,11 @@ public class FillEntryService {
     }
 
     public GasUsageSummary getGasUsage(Long userId) {
-        Object[] totals = fillEntryRepository.sumsByUserId(userId);
-        Object[] sinceZero = fillEntryRepository.sumsSinceLastZero(userId);
+        List<Object[]> totalsList = fillEntryRepository.sumsByUserId(userId);
+        List<Object[]> sinceZeroList = fillEntryRepository.sumsSinceLastZero(userId);
+
+        Object[] totals = totalsList.isEmpty() ? ZERO_GAS_USAGE : totalsList.get(0);
+        Object[] sinceZero = sinceZeroList.isEmpty() ? ZERO_GAS_USAGE : sinceZeroList.get(0);
 
         return GasUsageSummary.builder()
                 .totalO2Added(toBigDecimal(totals[0]))
