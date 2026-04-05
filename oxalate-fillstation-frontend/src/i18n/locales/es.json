@@ -82,7 +82,10 @@
     "editable": "Editable",
     "notEditable": "No editable",
     "confirmDelete": "¿Está seguro de que desea eliminar este registro de llenado?",
-    "cylinder": "Cilindro"
+    "cylinder" : "Cilindro",
+    "selectCylinder" : "Seleccione un cilindro",
+    "cylinderRequired" : "Seleccione un cilindro",
+    "noCylindersHint" : "No hay cilindros disponibles. Añada un cilindro primero."
   },
   "operator": {
     "title": "Panel de operador",

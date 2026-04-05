@@ -75,10 +75,12 @@ Navigate to **Fills** in the sidebar.
 #### 4.1 Add a Fill
 
 1. Click **Add fill**.
-2. Select a **cylinder** and the **fill date**.
+2. Select a **cylinder** from the dropdown (showing your own cylinders) and the **fill date**.
 3. Enter start and end pressures (bar) and start/end O₂ and He percentages.
 4. Optionally add **notes**.
 5. Click **Save**. The amounts of O₂, He, and total gas added are calculated automatically.
+
+> You do not need to enter a cylinder ID manually. If no cylinder is available in the dropdown, add one in **Cylinders** first.
 
 #### 4.2 Fill Statuses
 

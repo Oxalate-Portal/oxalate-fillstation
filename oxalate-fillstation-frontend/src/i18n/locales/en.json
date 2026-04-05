@@ -82,7 +82,10 @@
     "editable": "Editable",
     "notEditable": "Not Editable",
     "confirmDelete": "Are you sure you want to delete this fill entry?",
-    "cylinder": "Cylinder"
+    "cylinder" : "Cylinder",
+    "selectCylinder" : "Select a cylinder",
+    "cylinderRequired" : "Please select a cylinder",
+    "noCylindersHint" : "No cylinders available. Add a cylinder first."
   },
   "operator": {
     "title": "Operator Panel",

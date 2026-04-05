@@ -82,7 +82,10 @@
     "editable": "Bearbeitbar",
     "notEditable": "Nicht bearbeitbar",
     "confirmDelete": "Möchten Sie diesen Fülleintrag wirklich löschen?",
-    "cylinder": "Flasche"
+    "cylinder" : "Flasche",
+    "selectCylinder" : "Flasche auswählen",
+    "cylinderRequired" : "Bitte wählen Sie eine Flasche aus",
+    "noCylindersHint" : "Keine Flaschen verfügbar. Bitte zuerst eine Flasche hinzufügen."
   },
   "operator": {
     "title": "Bediener-Panel",
