@@ -169,7 +169,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push backend image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: oxalate-fillstation-backend
           file: oxalate-fillstation-backend/service/Dockerfile
@@ -181,7 +181,7 @@ jobs:
             ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-backend:${{ steps.semver.outputs.version }}
 
       - name: Build and push frontend image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: oxalate-fillstation-frontend
           push: true
