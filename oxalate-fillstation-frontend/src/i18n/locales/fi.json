@@ -82,7 +82,10 @@
     "editable": "Muokattavissa",
     "notEditable": "Ei muokattavissa",
     "confirmDelete": "Haluatko varmasti poistaa tämän täyttömerkinnän?",
-    "cylinder": "Pullo"
+    "cylinder" : "Pullo",
+    "selectCylinder" : "Valitse pullo",
+    "cylinderRequired" : "Valitse pullo",
+    "noCylindersHint" : "Pulloja ei ole saatavilla. Lisää ensin pullo."
   },
   "operator": {
     "title": "Operaattoripaneeli",

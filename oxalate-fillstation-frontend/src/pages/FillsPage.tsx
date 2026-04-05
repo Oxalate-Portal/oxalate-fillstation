@@ -1,11 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Button, DatePicker, Form, Input, InputNumber, message, Modal, Popconfirm, Space, Table, Tag, Typography} from 'antd';
+import {Button, DatePicker, Form, Input, InputNumber, message, Modal, Popconfirm, Select, Space, Table, Tag, Typography} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import {useTranslation} from 'react-i18next';
 import type {ColumnsType} from 'antd/es/table';
 import dayjs from 'dayjs';
 import {createFill, deleteFill, getFills, updateFill} from '../api/fillApi';
-import type {FillEntry, FillStatus} from '../types';
+import {getCylinders} from '../api/cylinderApi';
+import type {Cylinder, FillEntry, FillStatus} from '../types';
 
 const { Title } = Typography;
 
@@ -15,13 +16,27 @@ const statusColorMap: Record<FillStatus, string> = {
   ZEROED: 'default',
 };
 
+interface FillFormValues {
+    fillDate?: dayjs.Dayjs | null;
+    cylinderId?: number;
+    startPressure?: number;
+    endPressure?: number;
+    startO2Percentage?: number;
+    startHePercentage?: number;
+    endO2Percentage?: number;
+    endHePercentage?: number;
+    notes?: string;
+}
+
 const FillsPage: React.FC = () => {
   const { t } = useTranslation();
   const [fills, setFills] = useState<FillEntry[]>([]);
   const [loading, setLoading] = useState(true);
+    const [cylindersLoading, setCylindersLoading] = useState(true);
+    const [cylinders, setCylinders] = useState<Cylinder[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingFill, setEditingFill] = useState<FillEntry | null>(null);
-  const [form] = Form.useForm();
+    const [form] = Form.useForm<FillFormValues>();
   const [submitLoading, setSubmitLoading] = useState(false);
 
     const fetchFills = useCallback(() => {
@@ -32,9 +47,18 @@ const FillsPage: React.FC = () => {
       .finally(() => setLoading(false));
     }, [t]);
 
+    const fetchCylinders = useCallback(() => {
+        setCylindersLoading(true);
+        getCylinders()
+                .then((res) => setCylinders(res.data as Cylinder[]))
+                .catch(() => message.error(t('common.error')))
+                .finally(() => setCylindersLoading(false));
+    }, [t]);
+
     useEffect(() => {
         fetchFills();
-    }, [fetchFills]);
+        fetchCylinders();
+    }, [fetchCylinders, fetchFills]);
 
   const handleEdit = (record: FillEntry) => {
     setEditingFill(record);
@@ -56,11 +80,14 @@ const FillsPage: React.FC = () => {
     try {
       const values = await form.validateFields();
       setSubmitLoading(true);
-      const payload = { ...values, fillDate: values.fillDate ? (values.fillDate as ReturnType<typeof dayjs>).toISOString() : null };
+        const payload: Partial<FillEntry> = {
+            ...values,
+            fillDate: values.fillDate ? values.fillDate.toISOString() : undefined,
+        };
       if (editingFill) {
-        await updateFill(editingFill.id, payload as Partial<FillEntry>);
+          await updateFill(editingFill.id, payload);
       } else {
-        await createFill(payload as Partial<FillEntry>);
+          await createFill(payload);
       }
       message.success(t('common.success'));
       setModalOpen(false);
@@ -95,16 +122,41 @@ const FillsPage: React.FC = () => {
   ];
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+          <Space orientation="vertical" style={{width: '100%'}}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Title level={2}>{t('fills.title')}</Title>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => { setEditingFill(null); form.resetFields(); setModalOpen(true); }}>{t('fills.add')}</Button>
       </div>
       <Table dataSource={fills} columns={columns} rowKey="id" loading={loading} scroll={{ x: 800 }} />
-      <Modal title={editingFill ? t('fills.edit') : t('fills.add')} open={modalOpen} onOk={handleSubmit} onCancel={() => setModalOpen(false)} confirmLoading={submitLoading} okText={t('common.save')} cancelText={t('common.cancel')} width={600}>
+              <Modal
+                      title={editingFill ? t('fills.edit') : t('fills.add')}
+                      open={modalOpen}
+                      onOk={handleSubmit}
+                      onCancel={() => setModalOpen(false)}
+                      confirmLoading={submitLoading}
+                      okText={t('common.save')}
+                      cancelText={t('common.cancel')}
+                      okButtonProps={{disabled: cylinders.length === 0}}
+                      width={600}
+              >
         <Form form={form} layout="vertical">
           <Form.Item name="fillDate" label={t('fills.date')}><DatePicker style={{ width: '100%' }} /></Form.Item>
-          <Form.Item name="cylinderId" label={t('fills.cylinder')}><InputNumber style={{ width: '100%' }} /></Form.Item>
+            <Form.Item
+                    name="cylinderId"
+                    label={t('fills.cylinder')}
+                    rules={[{required: true, message: t('fills.cylinderRequired')}]}
+                    extra={cylinders.length === 0 ? t('fills.noCylindersHint') : undefined}
+            >
+                <Select
+                        loading={cylindersLoading}
+                        disabled={cylindersLoading || cylinders.length === 0}
+                        placeholder={t('fills.selectCylinder')}
+                        options={cylinders.map((cylinder) => ({
+                            value: cylinder.id,
+                            label: `${cylinder.name} (${cylinder.serialNumber})`,
+                        }))}
+                />
+            </Form.Item>
           <Form.Item name="startPressure" label={t('fills.startPressure')}><InputNumber style={{ width: '100%' }} /></Form.Item>
           <Form.Item name="endPressure" label={t('fills.endPressure')}><InputNumber style={{ width: '100%' }} /></Form.Item>
           <Form.Item name="startO2Percentage" label={t('fills.startO2')}><InputNumber style={{ width: '100%' }} min={0} max={100} /></Form.Item>

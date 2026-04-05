@@ -82,7 +82,10 @@
     "editable": "Redigerbar",
     "notEditable": "Ej redigerbar",
     "confirmDelete": "Är du säker på att du vill ta bort denna fyllningspost?",
-    "cylinder": "Cylinder"
+    "cylinder" : "Cylinder",
+    "selectCylinder" : "Välj en cylinder",
+    "cylinderRequired" : "Välj en cylinder",
+    "noCylindersHint" : "Inga cylindrar tillgängliga. Lägg till en cylinder först."
   },
   "operator": {
     "title": "Operatörspanel",

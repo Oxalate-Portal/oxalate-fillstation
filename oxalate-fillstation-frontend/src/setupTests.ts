@@ -15,6 +15,21 @@ if (!globalThis.TextEncoder || !globalThis.TextDecoder) {
     }
 }
 
+if (typeof ResizeObserver === 'undefined') {
+    class MockResizeObserver {
+        observe(): void {
+        }
+
+        unobserve(): void {
+        }
+
+        disconnect(): void {
+        }
+    }
+
+    (globalThis as unknown as Record<string, unknown>).ResizeObserver = MockResizeObserver;
+}
+
 // Mock MessageChannel for Ant Design Form components (not available in jsdom).
 // The callback must be deferred (via queueMicrotask) so that any pending
 // array writes that precede the postMessage call complete before the handler
@@ -48,3 +63,12 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
+
+const originalGetComputedStyle = window.getComputedStyle;
+window.getComputedStyle = ((element: Element, pseudoElt?: string): CSSStyleDeclaration => {
+    if (pseudoElt) {
+        return originalGetComputedStyle(element);
+    }
+    return originalGetComputedStyle(element);
+}) as typeof window.getComputedStyle;
+

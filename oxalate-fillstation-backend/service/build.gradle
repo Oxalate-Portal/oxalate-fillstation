@@ -69,3 +69,15 @@ tasks
         .named('test') {
             useJUnitPlatform()
         }
+
+// When running the application locally via `./gradlew bootRun` we don't want
+// Spring Boot to automatically start Docker Compose containers. The project
+// includes `spring-boot-docker-compose` as a developmentOnly dependency for
+// CI/local convenience, but for developers starting the JVM directly we
+// prefer to connect to a manually started Postgres on port 5432. Disable the
+// Docker Compose lifecycle by passing the system property when Gradle's
+// `bootRun` task launches the JVM.
+bootRun {
+    jvmArgs = ["-Dspring.docker.compose.enabled=false"]
+}
+
