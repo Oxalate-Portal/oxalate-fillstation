@@ -47,18 +47,48 @@ const FillsPage: React.FC = () => {
       .finally(() => setLoading(false));
     }, [t]);
 
-    const fetchCylinders = useCallback(() => {
-        setCylindersLoading(true);
-        getCylinders()
-                .then((res) => setCylinders(res.data as Cylinder[]))
-                .catch(() => message.error(t('common.error')))
-                .finally(() => setCylindersLoading(false));
-    }, [t]);
 
     useEffect(() => {
-        fetchFills();
-        fetchCylinders();
-    }, [fetchCylinders, fetchFills]);
+        let active = true;
+
+        void getFills()
+                .then((res) => {
+                    if (active) {
+                        setFills(res.data as FillEntry[]);
+                    }
+                })
+                .catch(() => {
+                    if (active) {
+                        message.error(t('common.error'));
+                    }
+                })
+                .finally(() => {
+                    if (active) {
+                        setLoading(false);
+                    }
+                });
+
+        void getCylinders()
+                .then((res) => {
+                    if (active) {
+                        setCylinders(res.data as Cylinder[]);
+                    }
+                })
+                .catch(() => {
+                    if (active) {
+                        message.error(t('common.error'));
+                    }
+                })
+                .finally(() => {
+                    if (active) {
+                        setCylindersLoading(false);
+                    }
+                });
+
+        return () => {
+            active = false;
+        };
+    }, [t]);
 
   const handleEdit = (record: FillEntry) => {
     setEditingFill(record);

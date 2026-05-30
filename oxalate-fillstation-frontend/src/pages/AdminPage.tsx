@@ -34,8 +34,28 @@ const AdminPage: React.FC = () => {
         getConfig().then((r) => setConfigs(r.data as Configuration[])).catch(() => message.error(t('common.error'))).finally(() => setLoading(false));
     }, [t]);
     useEffect(() => {
-        fetchConfigs();
-    }, [fetchConfigs]);
+        let active = true;
+        void getConfig()
+                .then((r) => {
+                    if (active) {
+                        setConfigs(r.data as Configuration[]);
+                    }
+                })
+                .catch(() => {
+                    if (active) {
+                        message.error(t('common.error'));
+                    }
+                })
+                .finally(() => {
+                    if (active) {
+                        setLoading(false);
+                    }
+                });
+
+        return () => {
+            active = false;
+        };
+    }, [t]);
 
     const fetchUsers = useCallback(() => {
         setUsersLoading(true);
@@ -43,8 +63,28 @@ const AdminPage: React.FC = () => {
     }, [t]);
 
     useEffect(() => {
-        fetchUsers();
-    }, [fetchUsers]);
+        let active = true;
+        void getAdminUsers()
+                .then((r) => {
+                    if (active) {
+                        setUsers(r.data as User[]);
+                    }
+                })
+                .catch(() => {
+                    if (active) {
+                        message.error(t('common.error'));
+                    }
+                })
+                .finally(() => {
+                    if (active) {
+                        setUsersLoading(false);
+                    }
+                });
+
+        return () => {
+            active = false;
+        };
+    }, [t]);
 
   const handleEdit = (record: Configuration) => { setEditingConfig(record); form.setFieldsValue(record); setModalOpen(true); };
   const handleDelete = async (id: number) => { try { await deleteConfig(id); message.success(t('common.success')); fetchConfigs(); } catch { message.error(t('common.error')); } };

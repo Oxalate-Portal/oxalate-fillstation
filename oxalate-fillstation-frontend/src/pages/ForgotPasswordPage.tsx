@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Card, Typography, Alert, message } from 'antd';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { forgotPassword } from '../api/authApi';
+import React, {useState} from 'react';
+import {Alert, Button, Card, Form, Input, message, Typography} from 'antd';
+import {Link} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {forgotPassword} from '../api/authApi';
 
 const { Title } = Typography;
 
@@ -28,7 +28,7 @@ const ForgotPasswordPage: React.FC = () => {
       <Card style={{ width: 400 }}>
         <Title level={3} style={{ textAlign: 'center' }}>{t('auth.forgotPassword')}</Title>
         {sent ? (
-          <Alert type="success" message={t('auth.passwordResetSent')} />
+                <Alert type="success" title={t('auth.passwordResetSent')}/>
         ) : (
           <Form layout="vertical" onFinish={onFinish}>
             <Form.Item

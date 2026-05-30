@@ -26,8 +26,28 @@ const CylindersPage: React.FC = () => {
     }, [t]);
 
     useEffect(() => {
-        fetchCylinders();
-    }, [fetchCylinders]);
+        let active = true;
+        void getCylinders()
+                .then((res) => {
+                    if (active) {
+                        setCylinders(res.data as Cylinder[]);
+                    }
+                })
+                .catch(() => {
+                    if (active) {
+                        message.error(t('common.error'));
+                    }
+                })
+                .finally(() => {
+                    if (active) {
+                        setLoading(false);
+                    }
+                });
+
+        return () => {
+            active = false;
+        };
+    }, [t]);
 
   const handleEdit = (record: Cylinder) => {
     setEditingCylinder(record);
@@ -85,7 +105,7 @@ const CylindersPage: React.FC = () => {
   ];
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+          <Space orientation="vertical" style={{width: '100%'}}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Title level={2}>{t('cylinders.title')}</Title>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => { setEditingCylinder(null); form.resetFields(); setModalOpen(true); }}>{t('cylinders.add')}</Button>

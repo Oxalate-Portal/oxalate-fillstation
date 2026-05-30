@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Card, Typography, Select, Alert, message } from 'antd';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useAuth } from '../context/AuthContext';
+import React, {useState} from 'react';
+import {Alert, Button, Card, Form, Input, message, Select, Typography} from 'antd';
+import {Link} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {useAuth} from '../context/AuthContext';
 
 const { Title } = Typography;
 
@@ -39,7 +39,7 @@ const RegisterPage: React.FC = () => {
         {success ? (
           <Alert
             type="success"
-            message={t('auth.registerSuccess')}
+            title={t('auth.registerSuccess')}
             action={<Link to="/login">{t('auth.backToLogin')}</Link>}
           />
         ) : (

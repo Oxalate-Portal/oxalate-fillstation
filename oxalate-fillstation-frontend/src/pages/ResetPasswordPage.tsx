@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Card, Typography, Alert, message } from 'antd';
-import { Link, useSearchParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { resetPassword } from '../api/authApi';
+import React, {useState} from 'react';
+import {Alert, Button, Card, Form, Input, message, Typography} from 'antd';
+import {Link, useSearchParams} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {resetPassword} from '../api/authApi';
 
 const { Title } = Typography;
 
@@ -32,7 +32,7 @@ const ResetPasswordPage: React.FC = () => {
         {success ? (
           <Alert
             type="success"
-            message={t('auth.passwordResetSuccess')}
+            title={t('auth.passwordResetSuccess')}
             action={<Link to="/login">{t('auth.backToLogin')}</Link>}
           />
         ) : (
