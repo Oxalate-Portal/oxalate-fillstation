@@ -15,9 +15,16 @@ export default defineConfig([
             reactHooks.configs.flat.recommended,
             reactRefresh.configs.vite,
         ],
+        rules: {
+            '@typescript-eslint/no-deprecated': 'warn',
+        },
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser,
+            parserOptions: {
+                project: ['./tsconfig.eslint.json'],
+                tsconfigRootDir: import.meta.dirname,
+            },
         },
     },
 ])

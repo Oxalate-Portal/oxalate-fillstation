@@ -26,9 +26,46 @@ const OperatorPage: React.FC = () => {
     }, [t]);
 
     useEffect(() => {
-        fetchUsers();
-        fetchPending();
-    }, [fetchPending, fetchUsers]);
+        let active = true;
+
+        void getUsers()
+                .then((r) => {
+                    if (active) {
+                        setUsers(r.data as User[]);
+                    }
+                })
+                .catch(() => {
+                    if (active) {
+                        message.error(t('common.error'));
+                    }
+                })
+                .finally(() => {
+                    if (active) {
+                        setUsersLoading(false);
+                    }
+                });
+
+        void getPendingRegistrations()
+                .then((r) => {
+                    if (active) {
+                        setPendingUsers(r.data as User[]);
+                    }
+                })
+                .catch(() => {
+                    if (active) {
+                        message.error(t('common.error'));
+                    }
+                })
+                .finally(() => {
+                    if (active) {
+                        setPendingLoading(false);
+                    }
+                });
+
+        return () => {
+            active = false;
+        };
+    }, [t]);
 
   const handleApprove = async (id: number) => { try { await approveRegistration(id); message.success(t('operator.approveSuccess')); fetchPending(); } catch { message.error(t('common.error')); } };
   const handleReject = async (id: number) => { try { await rejectRegistration(id); message.success(t('operator.rejectSuccess')); fetchPending(); } catch { message.error(t('common.error')); } };
@@ -75,7 +112,7 @@ const OperatorPage: React.FC = () => {
   ];
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+          <Space orientation="vertical" style={{width: '100%'}}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Title level={2}>{t('operator.title')}</Title>
         <Button onClick={handleNotify} loading={notifyLoading}>{t('operator.notifyUsers')}</Button>

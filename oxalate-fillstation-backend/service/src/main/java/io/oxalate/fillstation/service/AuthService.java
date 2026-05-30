@@ -93,6 +93,9 @@ public class AuthService {
         if (user.getStatus() == UserStatus.LOCKED) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Account is locked");
         }
+        if (user.getStatus() == UserStatus.CLOSED) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Account is closed");
+        }
 
         String jwtToken = jwtTokenProvider.generateToken(user.getEmail());
         jwtTokenProvider.addJwtCookie(httpResponse, jwtToken);
@@ -147,6 +150,24 @@ public class AuthService {
             String resetLink = baseUrl + "/reset-password?token=" + token;
             emailService.sendPasswordResetEmail(user.getEmail(), user.getName(), resetLink, user.getLanguage());
         });
+    }
+
+    /**
+     * Sends a password reset link for an existing user account.
+     *
+     * @param userId the user id receiving the reset link
+     */
+    @Transactional
+    public void requestPasswordResetForUser(Long userId) {
+        User user = userRepository.findById(userId)
+                                  .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        emailTokenRepository.findByUserIdAndType(user.getId(), TokenType.PASSWORD_RESET)
+                            .forEach(emailTokenRepository::delete);
+
+        String token = generateAndSaveToken(user.getId(), TokenType.PASSWORD_RESET, 1);
+        String resetLink = baseUrl + "/reset-password?token=" + token;
+        emailService.sendPasswordResetEmail(user.getEmail(), user.getName(), resetLink, user.getLanguage());
     }
 
     @Transactional

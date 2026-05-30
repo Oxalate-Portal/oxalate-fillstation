@@ -194,7 +194,7 @@ jobs:
             ghcr.io/${{ steps.owner.outputs.value }}/oxalate-fillstation-frontend:${{ steps.semver.outputs.version }}
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.semver.outputs.version }}
           generate_release_notes: true

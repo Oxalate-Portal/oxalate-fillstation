@@ -1,4 +1,5 @@
 import api from '../axiosConfig';
+import {activateAdminUser, anonymizeAdminUser, closeAdminUser, getAdminUsers, sendAdminPasswordReset} from '../adminApi';
 import {verifyEmail} from '../authApi';
 import {getPendingRegistrations, notifyUsers, updateUserStatus, zeroUserFills,} from '../operatorApi';
 import {anonymize} from '../userApi';
@@ -44,6 +45,25 @@ describe('api route mappings', () => {
 
         expect(api.post)
             .toHaveBeenCalledWith('/api/users/me/anonymize');
+    });
+
+    test('adminUserRoutes_callExpectedEndpoints_Ok', () => {
+        getAdminUsers();
+        activateAdminUser(3);
+        sendAdminPasswordReset(3);
+        closeAdminUser(3);
+        anonymizeAdminUser(3);
+
+        expect(api.get)
+            .toHaveBeenCalledWith('/api/admin/users');
+        expect(api.post)
+            .toHaveBeenCalledWith('/api/admin/users/3/activate');
+        expect(api.post)
+            .toHaveBeenCalledWith('/api/admin/users/3/password-reset');
+        expect(api.post)
+            .toHaveBeenCalledWith('/api/admin/users/3/close');
+        expect(api.post)
+            .toHaveBeenCalledWith('/api/admin/users/3/anonymize');
     });
 });
 

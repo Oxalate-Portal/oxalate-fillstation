@@ -108,13 +108,23 @@
   "admin": {
     "title": "Administrationspanel",
     "config": "Konfiguration",
+    "users" : "Användare",
     "group": "Grupp",
     "key": "Nyckel",
     "value": "Värde",
     "add": "Lägg till konfiguration",
     "edit": "Redigera konfiguration",
     "delete": "Ta bort konfiguration",
-    "confirmDelete": "Är du säker på att du vill ta bort denna konfiguration?"
+    "confirmDelete" : "Är du säker på att du vill ta bort denna konfiguration?",
+    "activateUser" : "Aktivera",
+    "sendPasswordReset" : "Skicka lösenordsåterställning",
+    "closeUser" : "Stäng konto",
+    "anonymizeUser" : "Anonymisera",
+    "confirmClose" : "Är du säker på att du vill stänga detta användarkonto?",
+    "confirmAnonymize" : "Är du säker på att du vill anonymisera detta användarkonto?",
+    "passwordResetSent" : "E-post för lösenordsåterställning skickad",
+    "accountClosed" : "Konto stängt",
+    "accountAnonymized" : "Konto anonymiserat"
   },
   "common": {
     "save": "Spara",

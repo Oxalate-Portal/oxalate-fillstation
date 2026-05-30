@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Typography, Spin, Alert } from 'antd';
-import { Link, useSearchParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { verifyEmail } from '../api/authApi';
+import React, {useEffect, useState} from 'react';
+import {Alert, Card, Spin, Typography} from 'antd';
+import {Link, useSearchParams} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {verifyEmail} from '../api/authApi';
 
 const { Title } = Typography;
 
@@ -24,9 +24,9 @@ const VerifyEmailPage: React.FC = () => {
         <Title level={3} style={{ textAlign: 'center' }}>{t('auth.verifyEmail')}</Title>
         {status === 'loading' && <Spin />}
         {status === 'success' && (
-          <Alert type="success" message={t('auth.loginSuccess')} action={<Link to="/login">{t('auth.login')}</Link>} />
+                <Alert type="success" title={t('auth.loginSuccess')} action={<Link to="/login">{t('auth.login')}</Link>}/>
         )}
-        {status === 'error' && <Alert type="error" message={t('common.error')} />}
+          {status === 'error' && <Alert type="error" title={t('common.error')}/>}
       </Card>
     </div>
   );

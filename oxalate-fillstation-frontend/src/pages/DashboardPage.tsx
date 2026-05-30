@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Modal, Table, Typography, Space, Spin, message } from 'antd';
-import { useTranslation } from 'react-i18next';
-import type { ColumnsType } from 'antd/es/table';
+import React, {useEffect, useState} from 'react';
+import {Button, message, Modal, Space, Spin, Table, Typography} from 'antd';
+import {useTranslation} from 'react-i18next';
+import type {ColumnsType} from 'antd/es/table';
 import GasUsageCard from '../components/GasUsageCard';
-import { getGasUsage, getLoginHistory, anonymize } from '../api/userApi';
-import type { GasUsageSummary, LoginHistoryEntry } from '../types';
+import {anonymize, getGasUsage, getLoginHistory} from '../api/userApi';
+import type {GasUsageSummary, LoginHistoryEntry} from '../types';
 
 const { Title } = Typography;
 
@@ -49,7 +49,7 @@ const DashboardPage: React.FC = () => {
   if (loading) return <Spin size="large" />;
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }} size="large">
+          <Space orientation="vertical" style={{width: '100%'}} size="large">
       <Title level={2}>{t('dashboard.title')}</Title>
       {gasUsage && <GasUsageCard data={gasUsage} />}
       <Title level={4}>{t('dashboard.loginHistory')}</Title>

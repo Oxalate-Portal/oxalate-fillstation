@@ -64,7 +64,12 @@ public class UserService {
 
     public UserResponse updateUserStatus(Long userId, String statusStr) {
         User user = findUser(userId);
-        UserStatus newStatus = UserStatus.valueOf(statusStr.toUpperCase());
+        UserStatus newStatus;
+        try {
+            newStatus = UserStatus.valueOf(statusStr.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user status");
+        }
         UserStatus oldStatus = user.getStatus();
         user.setStatus(newStatus);
         user.setUpdatedAt(LocalDateTime.now());
@@ -96,6 +101,28 @@ public class UserService {
         return updateUserStatus(userId, UserStatus.LOCKED.name());
     }
 
+    /**
+     * Activates a user account so credentials can be used for login.
+     *
+     * @param userId user id to activate
+     * @return updated user details
+     */
+    @Transactional
+    public UserResponse activateUserAccount(Long userId) {
+        return updateUserStatus(userId, UserStatus.ACTIVE.name());
+    }
+
+    /**
+     * Closes a user account while preserving personal data.
+     *
+     * @param userId user id to close
+     * @return updated user details
+     */
+    @Transactional
+    public UserResponse closeUserAccount(Long userId) {
+        return updateUserStatus(userId, UserStatus.CLOSED.name());
+    }
+
     @Transactional
     public void anonymizeUser(Long userId) {
         User user = findUser(userId);
@@ -107,6 +134,16 @@ public class UserService {
         user.setStatus(UserStatus.LOCKED);
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
+    }
+
+    /**
+     * Anonymizes a user account through an administrator action.
+     *
+     * @param userId user id to anonymize
+     */
+    @Transactional
+    public void anonymizeUserByAdmin(Long userId) {
+        anonymizeUser(userId);
     }
 
     private User findUser(Long userId) {

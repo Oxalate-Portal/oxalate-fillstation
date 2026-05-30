@@ -1,6 +1,7 @@
 package io.oxalate.fillstation.security;
 
 import io.oxalate.fillstation.entity.User;
+import io.oxalate.fillstation.entity.UserStatus;
 import io.oxalate.fillstation.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .username(user.getEmail())
                 .password(user.getPassword())
                 .authorities(authorities)
-                .accountLocked(user.getStatus() == io.oxalate.fillstation.entity.UserStatus.LOCKED)
+                                                                 .accountLocked(user.getStatus() == UserStatus.LOCKED || user.getStatus() == UserStatus.CLOSED)
                 .build();
     }
 }

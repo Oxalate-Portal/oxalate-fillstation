@@ -108,13 +108,23 @@
   "admin": {
     "title": "Hallintapaneeli",
     "config": "Konfiguraatio",
+    "users" : "Käyttäjät",
     "group": "Ryhmä",
     "key": "Avain",
     "value": "Arvo",
     "add": "Lisää konfiguraatio",
     "edit": "Muokkaa konfiguraatiota",
     "delete": "Poista konfiguraatio",
-    "confirmDelete": "Haluatko varmasti poistaa tämän konfiguraation?"
+    "confirmDelete" : "Haluatko varmasti poistaa tämän konfiguraation?",
+    "activateUser" : "Aktivoi",
+    "sendPasswordReset" : "Lähetä salasanan palautus",
+    "closeUser" : "Sulje tili",
+    "anonymizeUser" : "Anonymisoi",
+    "confirmClose" : "Haluatko varmasti sulkea tämän käyttäjätilin?",
+    "confirmAnonymize" : "Haluatko varmasti anonymisoida tämän käyttäjätilin?",
+    "passwordResetSent" : "Salasanan palautussähköposti lähetetty",
+    "accountClosed" : "Tili suljettu",
+    "accountAnonymized" : "Tili anonymisoitu"
   },
   "common": {
     "save": "Tallenna",
