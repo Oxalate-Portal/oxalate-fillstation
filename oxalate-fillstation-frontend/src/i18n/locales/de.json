@@ -108,13 +108,23 @@
   "admin": {
     "title": "Admin-Panel",
     "config": "Konfiguration",
+    "users" : "Benutzer",
     "group": "Gruppe",
     "key": "Schlüssel",
     "value": "Wert",
     "add": "Konfiguration hinzufügen",
     "edit": "Konfiguration bearbeiten",
     "delete": "Konfiguration löschen",
-    "confirmDelete": "Möchten Sie diese Konfiguration wirklich löschen?"
+    "confirmDelete" : "Möchten Sie diese Konfiguration wirklich löschen?",
+    "activateUser" : "Aktivieren",
+    "sendPasswordReset" : "Passwort-Reset senden",
+    "closeUser" : "Konto schließen",
+    "anonymizeUser" : "Anonymisieren",
+    "confirmClose" : "Möchten Sie dieses Benutzerkonto wirklich schließen?",
+    "confirmAnonymize" : "Möchten Sie dieses Benutzerkonto wirklich anonymisieren?",
+    "passwordResetSent" : "Passwort-Reset-E-Mail gesendet",
+    "accountClosed" : "Konto geschlossen",
+    "accountAnonymized" : "Konto anonymisiert"
   },
   "common": {
     "save": "Speichern",

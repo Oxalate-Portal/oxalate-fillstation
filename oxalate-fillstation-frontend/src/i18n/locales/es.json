@@ -108,13 +108,23 @@
   "admin": {
     "title": "Panel de administración",
     "config": "Configuración",
+    "users" : "Usuarios",
     "group": "Grupo",
     "key": "Clave",
     "value": "Valor",
     "add": "Añadir configuración",
     "edit": "Editar configuración",
     "delete": "Eliminar configuración",
-    "confirmDelete": "¿Está seguro de que desea eliminar esta configuración?"
+    "confirmDelete" : "¿Está seguro de que desea eliminar esta configuración?",
+    "activateUser" : "Activar",
+    "sendPasswordReset" : "Enviar restablecimiento de contraseña",
+    "closeUser" : "Cerrar cuenta",
+    "anonymizeUser" : "Anonimizar",
+    "confirmClose" : "¿Está seguro de que desea cerrar esta cuenta de usuario?",
+    "confirmAnonymize" : "¿Está seguro de que desea anonimizar esta cuenta de usuario?",
+    "passwordResetSent" : "Correo de restablecimiento enviado",
+    "accountClosed" : "Cuenta cerrada",
+    "accountAnonymized" : "Cuenta anonimizada"
   },
   "common": {
     "save": "Guardar",

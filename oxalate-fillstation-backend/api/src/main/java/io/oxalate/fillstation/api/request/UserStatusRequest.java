@@ -8,6 +8,6 @@ import lombok.Data;
 @Schema(description = "Request to update a user's status")
 public class UserStatusRequest {
     @NotBlank
-    @Schema(description = "New status value (ACTIVE or LOCKED)", example = "ACTIVE")
+    @Schema(description = "New status value (PENDING, ACTIVE, LOCKED, or CLOSED)", example = "ACTIVE")
     private String status;
 }

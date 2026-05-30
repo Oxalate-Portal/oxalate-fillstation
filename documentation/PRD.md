@@ -132,6 +132,11 @@ Accounts with admin role have the following additional functionality:
   This allows for easy management of the application's configuration without needing to access the database directly. The backend also provides an API endpoint
   for retrieving the configuration settings, which can be used by the frontend to dynamically adjust its behavior based on the current configuration. This
   allows for a more flexible and adaptable application that can easily accommodate changes in requirements or user needs.
+- Administrators can view all user accounts and perform account lifecycle management actions in the admin panel:
+    - Set user account status to **Active** so the user can log in with existing credentials.
+    - Send a password reset email to a selected user.
+    - Close a user account without anonymizing personal data (account cannot log in while closed).
+    - Anonymize a user account as a separate action according to GDPR requirements.
 
 ### Other
 

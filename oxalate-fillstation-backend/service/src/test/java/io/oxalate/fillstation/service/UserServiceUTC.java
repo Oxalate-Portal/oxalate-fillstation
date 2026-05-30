@@ -5,6 +5,7 @@ import io.oxalate.fillstation.entity.UserStatus;
 import io.oxalate.fillstation.repository.LockedEmailRepository;
 import io.oxalate.fillstation.repository.UserRepository;
 import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -69,6 +70,44 @@ class UserServiceUTC {
         userService.rejectPendingRegistration(2L);
 
         verify(lockedEmailRepository).save(any());
+        verify(userRepository).save(user);
+    }
+
+    @Test
+    void closeUserAccount_whenCalled_setsClosedStatus_Ok() {
+        User user = User.builder()
+                        .id(3L)
+                        .email("close@example.com")
+                        .name("Close Me")
+                        .status(UserStatus.ACTIVE)
+                        .emailVerified(true)
+                        .build();
+
+        when(userRepository.findById(3L)).thenReturn(Optional.of(user));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        userService.closeUserAccount(3L);
+
+        assertEquals(UserStatus.CLOSED, user.getStatus());
+        verify(userRepository).save(user);
+    }
+
+    @Test
+    void activateUserAccount_whenCalled_setsActiveStatus_Ok() {
+        User user = User.builder()
+                        .id(4L)
+                        .email("activate@example.com")
+                        .name("Activate Me")
+                        .status(UserStatus.PENDING)
+                        .emailVerified(true)
+                        .build();
+
+        when(userRepository.findById(4L)).thenReturn(Optional.of(user));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        userService.activateUserAccount(4L);
+
+        assertEquals(UserStatus.ACTIVE, user.getStatus());
         verify(userRepository).save(user);
     }
 }

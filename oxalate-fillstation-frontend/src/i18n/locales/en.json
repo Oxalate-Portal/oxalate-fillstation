@@ -108,13 +108,23 @@
   "admin": {
     "title": "Admin Panel",
     "config": "Configuration",
+    "users" : "Users",
     "group": "Group",
     "key": "Key",
     "value": "Value",
     "add": "Add Config",
     "edit": "Edit Config",
     "delete": "Delete Config",
-    "confirmDelete": "Are you sure you want to delete this configuration?"
+    "confirmDelete" : "Are you sure you want to delete this configuration?",
+    "activateUser" : "Activate",
+    "sendPasswordReset" : "Send password reset",
+    "closeUser" : "Close account",
+    "anonymizeUser" : "Anonymize",
+    "confirmClose" : "Are you sure you want to close this user account?",
+    "confirmAnonymize" : "Are you sure you want to anonymize this user account?",
+    "passwordResetSent" : "Password reset email sent",
+    "accountClosed" : "Account closed",
+    "accountAnonymized" : "Account anonymized"
   },
   "common": {
     "save": "Save",

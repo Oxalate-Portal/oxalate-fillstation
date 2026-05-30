@@ -1,5 +1,5 @@
 export type UserRole = 'ROLE_ADMIN' | 'ROLE_OPERATOR' | 'ROLE_USER';
-export type UserStatus = 'PENDING' | 'ACTIVE' | 'LOCKED';
+export type UserStatus = 'PENDING' | 'ACTIVE' | 'LOCKED' | 'CLOSED';
 export type FillStatus = 'ACTIVE' | 'LOCKED' | 'ZEROED';
 
 export interface User {

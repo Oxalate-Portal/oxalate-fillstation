@@ -99,6 +99,17 @@ The configuration table stores application-wide settings as **group / key / valu
 
 Use the **Edit** or **Delete** icons in the configuration table row.
 
+#### 3.3 User Account Management (Admin Role)
+
+In the **Admin Panel**, open the **Users** tab to manage account lifecycle operations.
+
+**Available actions per user:**
+
+- **Activate**: Sets account status to `ACTIVE`, allowing login with existing credentials.
+- **Send password reset**: Sends a password reset email link to the user.
+- **Close account**: Sets account status to `CLOSED`. The account is blocked from login but personal data is retained.
+- **Anonymize**: Replaces personal data with anonymous values (irreversible GDPR action).
+
 ---
 
 ### 4. Roles and Permissions
@@ -113,6 +124,10 @@ Use the **Edit** or **Delete** icons in the configuration table row.
 | Zero user fills                  |      | ✔        | ✔     |
 | Send notification emails         |      | ✔        | ✔     |
 | Manage application configuration |      |          | ✔     |
+| Activate user account            |      |          | ✔     |
+| Close user account               |      |          | ✔     |
+| Admin-triggered password reset   |      |          | ✔     |
+| Admin anonymize user account     |      |          | ✔     |
 
 A single user account may hold multiple roles simultaneously.
 

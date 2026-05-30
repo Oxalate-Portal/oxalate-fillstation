@@ -22,6 +22,9 @@ The application footer displays the current build version and build timestamp to
 2. Enter your registered email address and password.
 3. Click **Login**. On success, you are redirected to your **Dashboard**.
 
+> **Note:** Operator/Admin workflows can change account lifecycle status. If your account is set to **Closed**, login is blocked until an administrator
+> re-activates it.
+
 #### 1.3 Forgotten Password
 
 1. Click **Forgot password** on the Login page.
