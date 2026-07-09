@@ -6,6 +6,7 @@ const config = {
     '^.+\\.(ts|tsx)$': ['ts-jest', {
       tsconfig: '<rootDir>/tsconfig.test.json',
     }],
+      '^.+\\.jsx?$': ['babel-jest', {}],
   },
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/styleMock.js',
@@ -13,7 +14,7 @@ const config = {
     'buildInfo\\.json$': '<rootDir>/__mocks__/buildInfoMock.js',
   },
   transformIgnorePatterns: [
-    '/node_modules/(?!(antd|@ant-design|rc-[a-z-]+|@rc-component)/).*',
+      'node_modules/(?!(@ant-design|antd|rc-.*|@rc-component|@babel/runtime)/)',
   ],
 };
 
