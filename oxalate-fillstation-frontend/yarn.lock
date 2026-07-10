@@ -5126,15 +5126,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^26.3.5":
-  version: 26.3.5
-  resolution: "i18next@npm:26.3.5"
+"i18next@npm:^26.3.6":
+  version: 26.3.6
+  resolution: "i18next@npm:26.3.6"
   peerDependencies:
-    typescript: ^5 || ^6
+    typescript: ^5 || ^6 || ^7
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/5aa4159138629da06e91f611ea485d7a1fc8a3d8f1a3ba03654663da0b10e629988608aec071427d89360e6bbcd013b078ce4e6c22631e2cd7c3bb9a94f1e903
+  checksum: 10c0/5920ac8fb6b647a2bdd439d121de04e5297246e52c4d95d13f5faae0824fd45b2faeb66038bcd61fc62362daa815f9c32fb992d6faa3787607d1dfe768e9a8b1
   languageName: node
   linkType: hard
 
@@ -6427,13 +6427,13 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-refresh: "npm:^0.5.3"
     globals: "npm:^17.7.0"
-    i18next: "npm:^26.3.5"
+    i18next: "npm:^26.3.6"
     i18next-browser-languagedetector: "npm:^8.2.1"
     jest: "npm:^30.4.2"
     jest-environment-jsdom: "npm:^30.4.1"
     react: "npm:^19.2.7"
     react-dom: "npm:^19.2.7"
-    react-i18next: "npm:^17.0.8"
+    react-i18next: "npm:^17.0.9"
     react-router-dom: "npm:^7.18.1"
     ts-jest: "npm:^29.4.11"
     typescript: "npm:~6.0.3"
@@ -6661,9 +6661,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^17.0.8":
-  version: 17.0.8
-  resolution: "react-i18next@npm:17.0.8"
+"react-i18next@npm:^17.0.9":
+  version: 17.0.9
+  resolution: "react-i18next@npm:17.0.9"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
     html-parse-stringify: "npm:^3.0.1"
@@ -6671,7 +6671,7 @@ __metadata:
   peerDependencies:
     i18next: ">= 26.2.0"
     react: ">= 16.8.0"
-    typescript: ^5 || ^6
+    typescript: ^5 || ^6 || ^7
   peerDependenciesMeta:
     react-dom:
       optional: true
@@ -6679,7 +6679,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/4d13d396208927ed3c80eb62db011a98dae16d93fc951bb4cb220fc5a3a5dd2f0046244fdbd197f627f595230d6fa05cc5d1c6f52b6241acd63ff818dff63acb
+  checksum: 10c0/cd7ca7c03daaa22b72341b67c66f00cdc8b694c5d84d6e1fe5ffb2e87d7b6d8941cdcf52e407d7fe7ee7b8a77192e517732d815756fec44eb258e3c8d3956329
   languageName: node
   linkType: hard
 
