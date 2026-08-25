@@ -1,8 +1,13 @@
 plugins {
     id 'java'
+    id 'jacoco'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementPluginVersion}"
     id 'org.hibernate.orm' version "${hibernateOrmPluginVersion}"
+}
+
+jacoco {
+    toolVersion = jacocoVersion
 }
 
 group = 'io.oxalate.fillstation'
@@ -67,7 +72,16 @@ hibernate {
 tasks
         .named('test') {
             useJUnitPlatform()
+            finalizedBy jacocoTestReport
         }
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml
+                .required = true
+    }
+}
 
 // When running the application locally via `./gradlew bootRun` we don't want
 // Spring Boot to automatically start Docker Compose containers. The project
