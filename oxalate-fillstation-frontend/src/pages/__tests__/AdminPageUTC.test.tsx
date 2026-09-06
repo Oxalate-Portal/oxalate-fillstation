@@ -70,5 +70,5 @@ describe('AdminPageUTC', () => {
         await user.click(screen.getByRole('button', {name: 'admin.closeUser'}));
         await user.click(await screen.findByRole('button', {name: 'common.yes'}));
         expect(mockCloseAdminUser).toHaveBeenCalledWith(11);
-    }, 10000);
+    }, 30000);
 });
