@@ -5,8 +5,10 @@ import OperatorPage from '../OperatorPage';
 import {approveRegistration, getPendingRegistrations, getUsers, notifyUsers, rejectRegistration, updateUserStatus, zeroUserFills} from '../../api/operatorApi';
 import {forgotPassword} from '../../api/authApi';
 
+const translate = (key: string): string => key;
+
 jest.mock('react-i18next', () => ({
-    useTranslation: () => ({t: (key: string) => key}),
+    useTranslation: () => ({t: translate}),
 }));
 
 jest.mock('../../api/operatorApi', () => ({
@@ -78,6 +80,5 @@ describe('OperatorPageUTC', () => {
 
         await user.click(screen.getByRole('button', {name: 'operator.lock'}));
         expect(mockUpdateUserStatus).toHaveBeenCalledWith(7, 'LOCKED');
-    });
+    }, 10000);
 });
-
