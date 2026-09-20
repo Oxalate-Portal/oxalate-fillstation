@@ -1,18 +1,17 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id 'org.springframework.boot' version "${springBootVersion}"
-    id 'io.spring.dependency-management' version "${dependencyManagementPluginVersion}"
-    id 'org.hibernate.orm' version "${hibernateOrmPluginVersion}"
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.dependency.management)
+    alias(libs.plugins.hibernate.orm)
 }
 
 jacoco {
-    toolVersion = jacocoVersion
+    toolVersion = libs.versions.jacoco.get()
 }
 
 group = 'io.oxalate.fillstation'
-version = project
-        .releaseVersion
+version = libs.versions.release.version.get()
 
 bootJar {
     archiveFileName = "${rootProject.name}-${version}.jar"
@@ -21,7 +20,7 @@ bootJar {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion
-                .of("${javaVersion}")
+                .of(libs.versions.java.get())
     }
 }
 
@@ -47,20 +46,20 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.flywaydb:flyway-database-postgresql"
-    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
+    implementation libs.springdoc.openapi
     implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6"
-    implementation "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+    implementation libs.jjwt.api
     compileOnly "org.projectlombok:lombok"
     developmentOnly "org.springframework.boot:spring-boot-docker-compose"
     runtimeOnly "org.postgresql:postgresql"
-    runtimeOnly "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
-    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
+    runtimeOnly libs.jjwt.impl
+    runtimeOnly libs.jjwt.jackson
     annotationProcessor "org.projectlombok:lombok"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.boot:spring-boot-testcontainers"
     testImplementation "org.testcontainers:testcontainers-junit-jupiter"
     testImplementation "org.testcontainers:testcontainers-postgresql"
-    testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitVersion}"
+    testRuntimeOnly libs.junit.platform.launcher
 }
 
 hibernate {

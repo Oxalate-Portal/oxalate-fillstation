@@ -1,0 +1,37 @@
+[versions]
+release-version = "0.0.1-SNAPSHOT"
+java = "25"
+spring-boot = "4.0.3"
+dependency-management = "1.1.7"
+hibernate-orm = "7.2.4.Final"
+freefair-lombok = "9.2.0"
+jackson-databind = "2.19.0"
+spring-data-jpa = "3.5.0"
+jakarta-validation = "3.1.1"
+swagger = "2.2.34"
+springdoc = "3.0.2"
+jjwt = "0.12.6"
+mockito = "5.17.0"
+junit = "6.0.3"
+jacoco = "0.8.13"
+
+[libraries]
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson-databind" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "spring-boot" }
+spring-data-jpa = { module = "org.springframework.data:spring-data-jpa", version.ref = "spring-data-jpa" }
+swagger-annotations = { module = "io.swagger.core.v3:swagger-annotations", version.ref = "swagger" }
+jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation" }
+mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
+springdoc-openapi = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+jjwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt" }
+jjwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt" }
+jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
+
+[plugins]
+freefair-lombok = { id = "io.freefair.lombok", version.ref = "freefair-lombok" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
+hibernate-orm = { id = "org.hibernate.orm", version.ref = "hibernate-orm" }
